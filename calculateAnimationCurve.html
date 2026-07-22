@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation Curve Calculator - Hermite 插值计算器</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@6.1.0/dist/echarts.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-color: #1a1a2e;
+            --panel-bg: #16213e;
+            --border-color: #0f3460;
+            --text-primary: #e8e8e8;
+            --text-secondary: #a0a0a0;
+            --accent: #00d9a5;
+            --accent-dim: rgba(0, 217, 165, 0.15);
+            --error-color: #ff6b6b;
+            --success-color: #00d9a5;
+            --warning-color: #ffd93d;
+            --input-bg: #0d1b2a;
+            --scrollbar-track: #0d1b2a;
+            --scrollbar-thumb: #0f3460;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg-color: #f5f5f5;
+                --panel-bg: #ffffff;
+                --border-color: #ddd;
+                --text-primary: #333;
+                --text-secondary: #666;
+                --accent: #00a67d;
+                --accent-dim: rgba(0, 166, 125, 0.1);
+                --input-bg: #fafafa;
+                --scrollbar-track: #eee;
+                --scrollbar-thumb: #ccc;
+            }
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            padding: 16px 24px;
+            background: var(--panel-bg);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        header h1 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: -0.02em;
+        }
+
+        .header-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .infinity-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            background: var(--accent-dim);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--accent);
+        }
+
+        .infinity-badge input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--accent);
+            cursor: pointer;
+        }
+
+        /* Main Layout */
+        main {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            min-height: calc(100vh - 72px);
+        }
+
+        @media (max-width: 1024px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Panels */
+        .panel {
+            display: flex;
+            flex-direction: column;
+            background: var(--panel-bg);
+            overflow: hidden;
+        }
+
+        .panel-left {
+            border-right: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 1024px) {
+            .panel-left {
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+        }
+
+        .panel-header {
+            padding: 14px 18px;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .panel-header .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #0d1b2a;
+        }
+
+        .btn-primary:hover {
+            background: #00f5bc;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--text-secondary);
+        }
+
+        .btn-danger {
+            background: var(--error-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #ff8787;
+        }
+
+        /* JSON Input */
+        .json-input-wrapper {
+            flex: 1;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        #jsonInput {
+            flex: 1;
+            width: 100%;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            padding: 14px;
+            resize: none;
+            outline: none;
+            transition: border-color 0.15s;
+        }
+
+        #jsonInput:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-dim);
+        }
+
+        #jsonInput::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+
+        .input-hint {
+            margin-top: 10px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .input-hint kbd {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.7rem;
+        }
+
+        /* Parse Info */
+        .parse-info {
+            padding: 12px 16px;
+            background: var(--accent-dim);
+            border-top: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            display: none;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .parse-info.visible {
+            display: flex;
+        }
+
+        .parse-info .item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .parse-info .label {
+            color: var(--text-secondary);
+        }
+
+        .parse-info .value {
+            font-weight: 600;
+            color: var(--accent);
+            font-family: monospace;
+        }
+
+        /* Results Panel */
+        .results-wrapper {
+            flex: 1;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 4px;
+        }
+
+        .tab {
+            padding: 8px 16px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 6px 6px 0 0;
+            transition: all 0.15s;
+            position: relative;
+        }
+
+        .tab:hover {
+            color: var(--text-primary);
+            background: var(--accent-dim);
+        }
+
+        .tab.active {
+            color: var(--accent);
+            background: var(--accent-dim);
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 1px;
+        }
+
+        .tab-panel {
+            display: none;
+            flex: 1;
+            overflow: auto;
+        }
+
+        .tab-panel.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Table */
+        .table-container {
+            flex: 1;
+            overflow: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--input-bg);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        thead th {
+            position: sticky;
+            top: 0;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--border-color);
+            z-index: 10;
+        }
+
+        tbody td {
+            padding: 9px 14px;
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.1s;
+        }
+
+        tbody tr:hover td {
+            background: var(--accent-dim);
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .col-time {
+            font-family: monospace;
+            font-weight: 500;
+            color: var(--accent);
+            white-space: nowrap;
+        }
+
+        .col-value {
+            font-family: monospace;
+            color: var(--text-primary);
+        }
+
+        .col-type {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 100px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .type-interp { background: var(--accent-dim); color: var(--accent); }
+        .type-constant { background: rgba(255, 217, 61, 0.15); color: var(--warning-color); }
+        .type-linear { background: rgba(255, 107, 107, 0.15); color: var(--error-color); }
+        .type-loop { background: rgba(100, 200, 255, 0.15); color: #64c8ff; }
+        .type-pingpong { background: rgba(200, 150, 255, 0.15); color: #c896ff; }
+        .type-error { background: rgba(255, 107, 107, 0.2); color: var(--error-color); }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            min-height: 200px;
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 24px;
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 16px;
+            opacity: 0.4;
+        }
+
+        /* Chart */
+        #chartContainer {
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            min-height: 300px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--input-bg);
+        }
+
+        .chart-controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 8px 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+
+        .chart-controls label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .chart-controls input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--accent);
+        }
+
+        .chart-controls select {
+            padding: 6px 10px;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 0.8rem;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            padding: 8px 16px;
+            background: var(--panel-bg);
+            border-top: 1px solid var(--border-color);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-secondary);
+        }
+
+        .status-dot.ok { background: var(--success-color); }
+        .status-dot.warn { background: var(--warning-color); }
+        .status-dot.error { background: var(--error-color); }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--scrollbar-track);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-thumb);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+
+        /* Keyframe List */
+        .keyframes-list {
+            flex: 1;
+            overflow: auto;
+            padding: 8px;
+        }
+
+        .keyframe-row {
+            display: grid;
+            grid-template-columns: 60px 70px 70px 70px 1fr;
+            gap: 8px;
+            padding: 8px 10px;
+            background: var(--input-bg);
+            border-radius: 6px;
+            margin-bottom: 6px;
+            font-size: 0.75rem;
+            font-family: monospace;
+            align-items: center;
+        }
+
+        .keyframe-row.header {
+            color: var(--text-secondary);
+            font-weight: 600;
+            background: transparent;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .keyframe-row .kf-time { color: var(--accent); font-weight: 600; }
+        .keyframe-row .kf-value { color: var(--text-primary); }
+        .keyframe-row .kf-slope { color: var(--text-secondary); }
+        .keyframe-row .kf-weight { color: var(--text-secondary); opacity: 0.7; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎬 Animation Curve Calculator</h1>
+        <div class="header-info">
+            <span>Hermite 三次插值 | Unity AnimationCurve 兼容</span>
+            <label class="infinity-badge">
+                <input type="checkbox" id="respectInfCheckbox">
+                尊重边界模式
+            </label>
+        </div>
+    </header>
+
+    <main>
+        <!-- Left Panel: JSON Input -->
+        <section class="panel panel-left">
+            <div class="panel-header">
+                <span>📋 JSON 输入</span>
+                <div class="actions">
+                    <button class="btn btn-secondary" id="btnLoadSample">加载示例</button>
+                    <button class="btn btn-primary" id="btnParse">解析并计算</button>
+                    <button class="btn btn-danger" id="btnClear">清空</button>
+                </div>
+            </div>
+
+            <div class="json-input-wrapper">
+                <textarea
+                    id="jsonInput"
+                    placeholder='粘贴 JSON 数据，例如：
+{
+  "curveName": {
+    "m_Curve": {
+      "Array": [
+        { "time": 0, "value": 0, "inSlope": 1, "outSlope": 1, "inWeight": 0, "outWeight": 0.33 },
+        { "time": 1, "value": 1, "inSlope": 0, "outSlope": 0, "inWeight": 0.33, "outWeight": 0 }
+      ]
+    },
+    "m_PreInfinity": 2,
+    "m_PostInfinity": 2
+  }
+}'>
+</textarea>
+                <div class="input-hint">
+                    <span>支持 Unity AnimationCurve JSON 格式</span>
+                    <span>外层对象键名即为曲线名称</span>
+                    <span>点击 <kbd>Ctrl+Enter</kbd> 快速计算</span>
+                </div>
+            </div>
+
+            <div class="parse-info" id="parseInfo">
+                <div class="item"><span class="label">曲线名:</span><span class="value" id="infoName">-</span></div>
+                <div class="item"><span class="label">关键帧:</span><span class="value" id="infoKeys">0</span></div>
+                <div class="item"><span class="label">时间范围:</span><span class="value" id="infoRange">-</span></div>
+                <div class="item"><span class="label">PreInfinity:</span><span class="value" id="infoPreInf">-</span></div>
+                <div class="item"><span class="label">PostInfinity:</span><span class="value" id="infoPostInf">-</span></div>
+            </div>
+
+            <div class="panel-header" style="border-top: 1px solid var(--border-color); border-bottom: none;">
+                <span>🔑 关键帧列表</span>
+            </div>
+            <div class="keyframes-list" id="keyframesList"></div>
+        </section>
+
+        <!-- Right Panel: Results -->
+        <section class="panel panel-right">
+            <div class="panel-header">
+                <span>📊 计算结果</span>
+            </div>
+
+            <div class="results-wrapper">
+                <div class="tabs">
+                    <button class="tab active" data-tab="table">📋 表格</button>
+                    <button class="tab" data-tab="chart">📈 可视化</button>
+                </div>
+
+                <div class="tab-panel active" id="panelTable">
+                    <div class="table-container">
+                        <table id="resultsTable">
+                            <thead>
+                                <tr>
+                                    <th style="width: 100px;">Time</th>
+                                    <th style="width: 140px;">Value</th>
+                                    <th style="width: 100px;">类型</th>
+                                    <th>详情</th>
+                                </tr>
+                            </thead>
+                            <tbody id="resultsBody"></tbody>
+                        </table>
+                        <div class="empty-state" id="emptyTable">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                            <p>左侧粘贴 JSON 并点击「解析并计算」</p>
+                            <p style="font-size: 0.75rem; margin-top: 4px;">或输入时间点后按回车计算单点</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-panel" id="panelChart">
+                    <div class="chart-controls">
+                        <label><input type="checkbox" id="showKeyframes" checked> 显示关键帧</label>
+                        <label><input type="checkbox" id="showTangents"> 显示切线</label>
+                        <label><input type="checkbox" id="showExtrapolation"> 显示外推段</label>
+                        <label>采样点数: <select id="sampleCount"><option value="200">200</option><option value="500" selected>500</option><option value="1000">1000</option></select></label>
+                        <label>范围扩展: <select id="rangeExtend"><option value="0.1">10%</option><option value="0.2" selected>20%</option><option value="0.5">50%</option><option value="1">100%</option></select></label>
+                    </div>
+                    <div id="chartContainer"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="status-bar">
+        <div class="status-item">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText">就绪</span>
+        </div>
+        <div class="status-item" id="calcTime"></div>
+        <div class="status-item">
+            <span>Precision: 6 位小数</span>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== Core Hermite Interpolation ====================
+        const INF_CONSTANT = 2;
+        const INF_LINEAR = 1;
+        const INF_LOOP = 0;
+        const INF_PINGPONG = 3;
+
+        function hermiteInterpolate(k0, k1, t) {
+            const dt = k1.time - k0.time;
+            if (dt === 0) return k0.value;
+
+            const u = (t - k0.time) / dt;
+            const u2 = u * u;
+            const u3 = u2 * u;
+
+            const h00 = 2 * u3 - 3 * u2 + 1;
+            const h10 = u3 - 2 * u2 + u;
+            const h01 = -2 * u3 + 3 * u2;
+            const h11 = u3 - u2;
+
+            const m0 = k0.outSlope;
+            const m1 = k1.inSlope;
+
+            return h00 * k0.value + h10 * m0 * dt + h01 * k1.value + h11 * m1 * dt;
+        }
+
+        function getCurveValue(keys, time, respectInf, preInf, postInf) {
+            if (keys.length === 0) return 0;
+            if (keys.length === 1) return keys[0].value;
+
+            const firstKey = keys[0];
+            const lastKey = keys[keys.length - 1];
+            const firstTime = firstKey.time;
+            const lastTime = lastKey.time;
+            const duration = lastTime - firstTime;
+
+            if (duration === 0) return firstKey.value;
+
+            let t = time;
+
+            // Before first key
+            if (t < firstTime) {
+                if (respectInf) {
+                    switch (preInf) {
+                        case INF_CONSTANT:
+                            return firstKey.value;
+                        case INF_LINEAR:
+                            return firstKey.value + firstKey.outSlope * (t - firstTime);
+                        case INF_LOOP: {
+                            let offset = (t - firstTime) % duration;
+                            if (offset < 0) offset += duration;
+                            t = firstTime + offset;
+                            break;
+                        }
+                        case INF_PINGPONG: {
+                            const cycleDur = 2 * duration;
+                            let cycle = (t - firstTime) % cycleDur;
+                            if (cycle < 0) cycle += cycleDur;
+                            if (cycle > duration) cycle = cycleDur - cycle;
+                            t = firstTime + cycle;
+                            break;
+                        }
+                        default:
+                            return firstKey.value;
+                    }
+                } else {
+                    return firstKey.value;
+                }
+            }
+
+            // After last key
+            if (t > lastTime) {
+                if (respectInf) {
+                    switch (postInf) {
+                        case INF_CONSTANT:
+                            return lastKey.value;
+                        case INF_LINEAR:
+                            return lastKey.value + lastKey.inSlope * (t - lastTime);
+                        case INF_LOOP: {
+                            let offset = (t - firstTime) % duration;
+                            if (offset < 0) offset += duration;
+                            t = firstTime + offset;
+                            break;
+                        }
+                        case INF_PINGPONG: {
+                            const cycleDur = 2 * duration;
+                            let cycle = (t - firstTime) % cycleDur;
+                            if (cycle < 0) cycle += cycleDur;
+                            if (cycle > duration) cycle = cycleDur - cycle;
+                            t = firstTime + cycle;
+                            break;
+                        }
+                        default:
+                            return lastKey.value;
+                    }
+                } else {
+                    return lastKey.value;
+                }
+            }
+
+            // Find segment
+            for (let i = 0; i < keys.length - 1; i++) {
+                const k0 = keys[i];
+                const k1 = keys[i + 1];
+                if (t >= k0.time && t <= k1.time) {
+                    return hermiteInterpolate(k0, k1, t);
+                }
+            }
+
+            return lastKey.value;
+        }
+
+        function getSegmentType(keys, time, respectInf, preInf, postInf) {
+            if (keys.length === 0) return 'empty';
+            if (keys.length === 1) return 'constant';
+
+            const firstKey = keys[0];
+            const lastKey = keys[keys.length - 1];
+            const firstTime = firstKey.time;
+            const lastTime = lastKey.time;
+            const duration = lastTime - firstTime;
+
+            if (time < firstTime) {
+                if (!respectInf) return 'constant';
+                switch (preInf) {
+                    case INF_CONSTANT: return 'constant';
+                    case INF_LINEAR: return 'linear';
+                    case INF_LOOP: return 'loop';
+                    case INF_PINGPONG: return 'pingpong';
+                    default: return 'constant';
+                }
+            }
+            if (time > lastTime) {
+                if (!respectInf) return 'constant';
+                switch (postInf) {
+                    case INF_CONSTANT: return 'constant';
+                    case INF_LINEAR: return 'linear';
+                    case INF_LOOP: return 'loop';
+                    case INF_PINGPONG: return 'pingpong';
+                    default: return 'constant';
+                }
+            }
+            return 'interp';
+        }
+
+        // ==================== JSON Parsing ====================
+        function parseCurveJson(jsonText) {
+            const cleaned = jsonText.trim().replace(/,$/, '');
+            let parsed;
+            try {
+                parsed = JSON.parse(cleaned);
+            } catch (e) {
+                // Try wrapping
+                if (!cleaned.startsWith('{')) {
+                    parsed = JSON.parse('{' + cleaned + '}');
+                } else {
+                    throw e;
+                }
+            }
+
+            // Find first property with m_Curve
+            const propName = Object.keys(parsed).find(k =>
+                parsed[k] && parsed[k].m_Curve && Array.isArray(parsed[k].m_Curve.Array)
+            );
+
+            if (!propName) {
+                throw new Error('未找到包含 m_Curve.Array 的属性');
+            }
+
+            const curveData = parsed[propName];
+            const keys = curveData.m_Curve.Array.map(k => ({
+                time: Number(k.time),
+                value: Number(k.value),
+                inSlope: Number(k.inSlope),
+                outSlope: Number(k.outSlope),
+                inWeight: Number(k.inWeight ?? 0),
+                outWeight: Number(k.outWeight ?? 0),
+                weightedMode: Number(k.weightedMode ?? 0)
+            }));
+
+            // Sort by time
+            keys.sort((a, b) => a.time - b.time);
+
+            const preInf = curveData.m_PreInfinity !== undefined ? Number(curveData.m_PreInfinity) : INF_CONSTANT;
+            const postInf = curveData.m_PostInfinity !== undefined ? Number(curveData.m_PostInfinity) : INF_CONSTANT;
+
+            return {
+                name: propName,
+                keys,
+                preInf,
+                postInf
+            };
+        }
+
+        // ==================== UI State ====================
+        let currentCurve = null;
+        let chartInstance = null;
+
+        const elements = {
+            jsonInput: document.getElementById('jsonInput'),
+            btnParse: document.getElementById('btnParse'),
+            btnClear: document.getElementById('btnClear'),
+            btnLoadSample: document.getElementById('btnLoadSample'),
+            respectInfCheckbox: document.getElementById('respectInfCheckbox'),
+            parseInfo: document.getElementById('parseInfo'),
+            infoName: document.getElementById('infoName'),
+            infoKeys: document.getElementById('infoKeys'),
+            infoRange: document.getElementById('infoRange'),
+            infoPreInf: document.getElementById('infoPreInf'),
+            infoPostInf: document.getElementById('infoPostInf'),
+            keyframesList: document.getElementById('keyframesList'),
+            resultsBody: document.getElementById('resultsBody'),
+            emptyTable: document.getElementById('emptyTable'),
+            statusDot: document.getElementById('statusDot'),
+            statusText: document.getElementById('statusText'),
+            calcTime: document.getElementById('calcTime'),
+            tabs: document.querySelectorAll('.tab'),
+            panels: document.querySelectorAll('.tab-panel'),
+            chartContainer: document.getElementById('chartContainer'),
+            showKeyframes: document.getElementById('showKeyframes'),
+            showTangents: document.getElementById('showTangents'),
+            showExtrapolation: document.getElementById('showExtrapolation'),
+            sampleCount: document.getElementById('sampleCount'),
+            rangeExtend: document.getElementById('rangeExtend'),
+        };
+
+        // ==================== Sample Data ====================
+        const sampleJson = `{
+  "staminaStrength": {
+    "m_Curve": {
+      "Array": [
+        { "time": 0.0, "value": 0.0, "inSlope": 3.0515401, "outSlope": 3.0515401, "weightedMode": 0, "inWeight": 0.0, "outWeight": 0.03960396 },
+        { "time": 1.0, "value": 1.0, "inSlope": 0.0, "outSlope": 0.0, "weightedMode": 0, "inWeight": 0.0, "outWeight": 0.0 }
+      ]
+    },
+    "m_PreInfinity": 2,
+    "m_PostInfinity": 2,
+    "m_RotationOrder": 4
+  }
+}`;
+
+        const sampleJson2 = `{
+  "weightMovementCurve": {
+    "m_Curve": {
+      "Array": [
+        { "time": -60.0, "value": 0.7499987, "inSlope": 0.012557099, "outSlope": 0.0100569455, "weightedMode": 0, "inWeight": 0.0, "outWeight": 0.33333334 },
+        { "time": -40.0, "value": 0.9511376, "inSlope": 0.0100569455, "outSlope": 0.0012215599, "weightedMode": 0, "inWeight": 0.33333334, "outWeight": 0.33333334 },
+        { "time": 0.0, "value": 1.0, "inSlope": 0.0012215599, "outSlope": -0.0033333162, "weightedMode": 0, "inWeight": 0.33333334, "outWeight": 0.33333334 },
+        { "time": 30.0, "value": 0.9000005, "inSlope": -0.0033333162, "outSlope": -0.006666569, "weightedMode": 0, "inWeight": 0.33333334, "outWeight": 0.33333334 },
+        { "time": 60.0, "value": 0.70000345, "inSlope": -0.006666569, "outSlope": -0.014047865, "weightedMode": 0, "inWeight": 0.33333334, "outWeight": 0.0 }
+      ]
+    },
+    "m_PreInfinity": 2,
+    "m_PostInfinity": 2,
+    "m_RotationOrder": 4
+  }
+}`;
+
+        // ==================== Event Handlers ====================
+        function setStatus(ok, text) {
+            elements.statusDot.className = 'status-dot ' + (ok ? 'ok' : 'error');
+            elements.statusText.textContent = text;
+        }
+
+        function formatValue(val) {
+            // Match PowerShell "0.######" - 6 decimal places max, trim trailing zeros
+            if (!isFinite(val)) return 'NaN';
+            const str = val.toFixed(6).replace(/\.?0+$/, '');
+            return str === '-0' ? '0' : str;
+        }
+
+        function renderKeyframes(keys) {
+            const header = `
+                <div class="keyframe-row header">
+                    <span>Time</span><span>Value</span><span>InSlope</span><span>OutSlope</span><span>Weights (In/Out)</span>
+                </div>
+            `;
+            const rows = keys.map(k => `
+                <div class="keyframe-row">
+                    <span class="kf-time">${k.time.toFixed(4)}</span>
+                    <span class="kf-value">${formatValue(k.value)}</span>
+                    <span class="kf-slope">${formatValue(k.inSlope)}</span>
+                    <span class="kf-slope">${formatValue(k.outSlope)}</span>
+                    <span class="kf-weight">${k.inWeight.toFixed(3)} / ${k.outWeight.toFixed(3)}</span>
+                </div>
+            `).join('');
+            elements.keyframesList.innerHTML = header + rows;
+        }
+
+        function renderResults(keys, times, respectInf, preInf, postInf) {
+            if (times.length === 0) {
+                elements.resultsBody.innerHTML = '';
+                elements.emptyTable.style.display = 'flex';
+                return;
+            }
+
+            elements.emptyTable.style.display = 'none';
+            const rows = times.map(t => {
+                const val = getCurveValue(keys, t, respectInf, preInf, postInf);
+                const type = getSegmentType(keys, t, respectInf, preInf, postInf);
+                const typeClass = 'type-' + type;
+                let detail = '';
+                if (type === 'interp') {
+                    // Find segment
+                    for (let i = 0; i < keys.length - 1; i++) {
+                        if (t >= keys[i].time && t <= keys[i + 1].time) {
+                            detail = `区间 [${keys[i].time.toFixed(3)}, ${keys[i + 1].time.toFixed(3)}]`;
+                            break;
+                        }
+                    }
+                } else if (type === 'constant') {
+                    detail = t < keys[0].time ? 'Clamp 前边界' : 'Clamp 后边界';
+                } else if (type === 'linear') {
+                    detail = t < keys[0].time ? `Linear 外推 (斜率 ${keys[0].outSlope})` : `Linear 外推 (斜率 ${keys[keys.length - 1].inSlope})`;
+                } else if (type === 'loop') {
+                    detail = 'Loop 循环模式';
+                } else if (type === 'pingpong') {
+                    detail = 'PingPong 乒乓模式';
+                }
+                return `
+                    <tr>
+                        <td class="col-time">${t}</td>
+                        <td class="col-value">${formatValue(val)}</td>
+                        <td><span class="col-type ${typeClass}">${type}</span></td>
+                        <td style="color: var(--text-secondary); font-size: 0.75rem;">${detail}</td>
+                    </tr>
+                `;
+            }).join('');
+            elements.resultsBody.innerHTML = rows;
+        }
+
+        function updateChart() {
+            if (!currentCurve || !chartInstance) return;
+
+            const keys = currentCurve.keys;
+            const respectInf = elements.respectInfCheckbox.checked;
+            const preInf = currentCurve.preInf;
+            const postInf = currentCurve.postInf;
+
+            const firstTime = keys[0].time;
+            const lastTime = keys[keys.length - 1].time;
+            const duration = lastTime - firstTime;
+            const extend = duration * Number(elements.rangeExtend.value);
+
+            const chartMin = firstTime - extend;
+            const chartMax = lastTime + extend;
+            const samples = Number(elements.sampleCount.value);
+
+            // Generate curve data
+            const curveData = [];
+            for (let i = 0; i <= samples; i++) {
+                const t = chartMin + (chartMax - chartMin) * i / samples;
+                const v = getCurveValue(keys, t, respectInf, preInf, postInf);
+                const type = getSegmentType(keys, t, respectInf, preInf, postInf);
+                curveData.push([t, v, type]);
+            }
+
+            // Keyframe points
+            const keyframeData = keys.map(k => [k.time, k.value]);
+
+            // Extrapolation zones
+            const series = [{
+                name: 'Curve',
+                type: 'line',
+                data: curveData.map(d => ({ value: [d[0], d[1]], itemStyle: { color: d[2] === 'interp' ? '#00d9a5' : '#ffd93d' } })),
+                smooth: false,
+                showSymbol: false,
+                lineStyle: { width: 2 },
+                z: 10
+            }];
+
+            if (elements.showKeyframes.checked) {
+                series.push({
+                    name: 'Keyframes',
+                    type: 'scatter',
+                    data: keyframeData,
+                    symbolSize: 10,
+                    itemStyle: { color: '#ff6b6b' },
+                    z: 20
+                });
+            }
+
+            // Extrapolation zones
+            if (elements.showExtrapolation.checked && respectInf) {
+                if (preInf !== INF_CONSTANT) {
+                    series.push({
+                        name: 'Pre-Extrapolation',
+                        type: 'line',
+                        data: [
+                            [chartMin, getCurveValue(keys, chartMin, true, preInf, postInf)],
+                            [firstTime, keys[0].value]
+                        ],
+                        lineStyle: { type: 'dashed', width: 1.5, color: '#ffd93d' },
+                        showSymbol: false,
+                        z: 5
+                    });
+                }
+                if (postInf !== INF_CONSTANT) {
+                    series.push({
+                        name: 'Post-Extrapolation',
+                        type: 'line',
+                        data: [
+                            [lastTime, keys[keys.length - 1].value],
+                            [chartMax, getCurveValue(keys, chartMax, true, preInf, postInf)]
+                        ],
+                        lineStyle: { type: 'dashed', width: 1.5, color: '#ffd93d' },
+                        showSymbol: false,
+                        z: 5
+                    });
+                }
+            }
+
+            const option = {
+                backgroundColor: 'transparent',
+                grid: { left: 50, right: 30, top: 20, bottom: 50 },
+                xAxis: {
+                    type: 'value',
+                    min: chartMin,
+                    max: chartMax,
+                    axisLine: { lineStyle: { color: '#333' } },
+                    axisLabel: { color: '#888', fontSize: 11 },
+                    splitLine: { lineStyle: { color: '#1a1a2e' } }
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLine: { lineStyle: { color: '#333' } },
+                    axisLabel: { color: '#888', fontSize: 11 },
+                    splitLine: { lineStyle: { color: '#1a1a2e' } },
+                    scale: true
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    backgroundColor: 'rgba(22, 33, 62, 0.95)',
+                    borderColor: '#0f3460',
+                    textStyle: { color: '#e8e8e8' },
+                    formatter: function(params) {
+                        const p = params[0];
+                        return `Time: ${p.value[0].toFixed(3)}<br/>Value: ${formatValue(p.value[1])}`;
+                    }
+                },
+                series: series,
+                animationDuration: 300
+            };
+
+            chartInstance.setOption(option, true);
+        }
+
+        function doParseAndCalculate() {
+            const text = elements.jsonInput.value.trim();
+            if (!text) {
+                setStatus(false, '请输入 JSON 数据');
+                return;
+            }
+
+            const startTime = performance.now();
+
+            try {
+                currentCurve = parseCurveJson(text);
+
+                // Update parse info
+                elements.infoName.textContent = currentCurve.name;
+                elements.infoKeys.textContent = currentCurve.keys.length;
+                elements.infoRange.textContent = `${currentCurve.keys[0].time.toFixed(3)} ~ ${currentCurve.keys[currentCurve.keys.length - 1].time.toFixed(3)}`;
+                elements.infoPreInf.textContent = ['Loop', 'Linear', 'Constant', 'PingPong'][currentCurve.preInf] || currentCurve.preInf;
+                elements.infoPostInf.textContent = ['Loop', 'Linear', 'Constant', 'PingPong'][currentCurve.postInf] || currentCurve.postInf;
+                elements.parseInfo.classList.add('visible');
+
+                renderKeyframes(currentCurve.keys);
+
+                // Default test times: keyframe times + midpoints + boundaries
+                const times = new Set();
+                currentCurve.keys.forEach(k => times.add(k.time));
+                for (let i = 0; i < currentCurve.keys.length - 1; i++) {
+                    const mid = (currentCurve.keys[i].time + currentCurve.keys[i + 1].time) / 2;
+                    times.add(mid);
+                }
+                const first = currentCurve.keys[0].time;
+                const last = currentCurve.keys[currentCurve.keys.length - 1].time;
+                const dur = last - first;
+                [first - 10, first - dur, first - 0.5, last + 0.5, last + 10, last + dur].forEach(t => times.add(t));
+
+                const sortedTimes = Array.from(times).sort((a, b) => a - b);
+                const respectInf = elements.respectInfCheckbox.checked;
+
+                renderResults(currentCurve.keys, sortedTimes, respectInf, currentCurve.preInf, currentCurve.postInf);
+                updateChart();
+
+                const elapsed = (performance.now() - startTime).toFixed(2);
+                elements.calcTime.textContent = `耗时: ${elapsed}ms`;
+                setStatus(true, `已解析: ${currentCurve.name} (${currentCurve.keys.length} 关键帧)`);
+            } catch (e) {
+                setStatus(false, '解析失败: ' + e.message);
+                console.error(e);
+            }
+        }
+
+        function clearAll() {
+            elements.jsonInput.value = '';
+            elements.parseInfo.classList.remove('visible');
+            elements.keyframesList.innerHTML = '';
+            elements.resultsBody.innerHTML = '';
+            elements.emptyTable.style.display = 'flex';
+            currentCurve = null;
+            setStatus(true, '就绪');
+            elements.calcTime.textContent = '';
+            if (chartInstance) {
+                chartInstance.clear();
+            }
+        }
+
+        // ==================== Event Binding ====================
+        elements.btnParse.addEventListener('click', doParseAndCalculate);
+        elements.btnClear.addEventListener('click', clearAll);
+        elements.btnLoadSample.addEventListener('click', () => {
+            elements.jsonInput.value = sampleJson;
+            doParseAndCalculate();
+        });
+
+        elements.respectInfCheckbox.addEventListener('change', () => {
+            if (currentCurve) doParseAndCalculate();
+        });
+
+        // Tabs
+        elements.tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.dataset.tab;
+                elements.tabs.forEach(t => t.classList.toggle('active', t === tab));
+                elements.panels.forEach(p => p.classList.toggle('active', p.id === 'panel' + target.charAt(0).toUpperCase() + target.slice(1)));
+                if (target === 'chart') {
+                    setTimeout(() => chartInstance?.resize(), 50);
+                }
+            });
+        });
+
+        // Chart controls
+        [elements.showKeyframes, elements.showTangents, elements.showExtrapolation, elements.sampleCount, elements.rangeExtend].forEach(el => {
+            el.addEventListener('change', updateChart);
+        });
+
+        // Keyboard shortcut
+        elements.jsonInput.addEventListener('keydown', e => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                doParseAndCalculate();
+            }
+        });
+
+        // Initialize chart
+        chartInstance = echarts.init(elements.chartContainer);
+        chartInstance.setOption({
+            backgroundColor: 'transparent',
+            title: { text: '等待数据...', left: 'center', top: 'center', textStyle: { color: '#666' } }
+        });
+
+        // Handle resize
+        window.addEventListener('resize', () => chartInstance?.resize());
+
+        // Load sample on start
+        elements.jsonInput.value = sampleJson2;
+        doParseAndCalculate();
+    </script>
+</body>
+</html>

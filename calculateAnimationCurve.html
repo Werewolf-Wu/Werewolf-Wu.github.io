@@ -550,6 +550,135 @@
         .keyframe-row .kf-value { color: var(--text-primary); }
         .keyframe-row .kf-slope { color: var(--text-secondary); }
         .keyframe-row .kf-weight { color: var(--text-secondary); opacity: 0.7; }
+
+        /* Calibration Input */
+        .calibration-wrapper {
+            padding: 10px 16px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .calibration-input-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .calibration-input-row input {
+            flex: 1;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 13px;
+            padding: 8px 12px;
+            outline: none;
+            transition: border-color 0.15s;
+        }
+
+        .calibration-input-row input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-dim);
+        }
+
+        .calibration-input-row input::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+
+        .calibration-display {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            min-height: 28px;
+        }
+
+        .calibration-display:empty::after {
+            content: '暂无标定点';
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            opacity: 0.5;
+            padding: 2px 0;
+        }
+
+        .calibration-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255, 217, 61, 0.12);
+            border: 1px solid rgba(255, 217, 61, 0.25);
+            border-radius: 100px;
+            padding: 2px 8px 2px 10px;
+            font-size: 0.75rem;
+            font-family: monospace;
+            color: var(--warning-color);
+            transition: all 0.15s;
+        }
+
+        .calibration-chip:hover {
+            background: rgba(255, 217, 61, 0.2);
+        }
+
+        .calibration-chip .cp-remove {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: transparent;
+            border: none;
+            color: var(--warning-color);
+            font-size: 10px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: all 0.1s;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .calibration-chip .cp-remove:hover {
+            opacity: 1;
+            background: rgba(255, 107, 107, 0.3);
+        }
+
+        /* Calibration rows in results table */
+        .row-calibration td {
+            background: rgba(255, 217, 61, 0.06);
+        }
+
+        .row-calibration:hover td {
+            background: rgba(255, 217, 61, 0.15) !important;
+        }
+
+        .col-calibration-badge {
+            display: inline-block;
+            font-size: 0.6rem;
+            padding: 1px 6px;
+            border-radius: 100px;
+            background: rgba(255, 217, 61, 0.15);
+            color: var(--warning-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        /* Precision control in status bar */
+        .precision-control {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .precision-control select {
+            padding: 2px 6px;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-primary);
+            font-size: 0.7rem;
+        }
     </style>
 </head>
 <body>
@@ -612,6 +741,20 @@
                 <span>🔑 关键帧列表</span>
             </div>
             <div class="keyframes-list" id="keyframesList"></div>
+
+            <div class="panel-header" style="border-top: 1px solid var(--border-color); border-bottom: none;">
+                <span>🎯 标定点</span>
+                <div class="actions">
+                    <button class="btn btn-secondary" id="btnClearCalibration" style="font-size:0.7rem;padding:4px 8px;">清除</button>
+                </div>
+            </div>
+            <div class="calibration-wrapper">
+                <div class="calibration-input-row">
+                    <input type="text" id="calibrationInput" placeholder="输入时间点，用逗号分隔，如：0.2, 0.5, 0.8">
+                    <button class="btn btn-primary" id="btnAddCalibration">添加</button>
+                </div>
+                <div class="calibration-display" id="calibrationDisplay"></div>
+            </div>
         </section>
 
         <!-- Right Panel: Results -->
@@ -657,6 +800,8 @@
                     <div class="chart-controls">
                         <label><input type="checkbox" id="showKeyframes" checked> 显示关键帧</label>
                         <label><input type="checkbox" id="showTangents"> 显示切线</label>
+                        <label>精度: <select id="precisionSelect"><option value="2">2位</option><option value="4">4位</option><option value="6" selected>6位</option><option value="8">8位</option><option value="10">10位</option></select></label>
+                        <label><input type="checkbox" id="snapToCalibration"> 吸附标定点</label>
                         <label><input type="checkbox" id="showExtrapolation"> 显示外推段</label>
                         <label>采样点数: <select id="sampleCount"><option value="200">200</option><option value="500" selected>500</option><option value="1000">1000</option></select></label>
                         <label>范围扩展: <select id="rangeExtend"><option value="0.1">10%</option><option value="0.2" selected>20%</option><option value="0.5">50%</option><option value="1">100%</option></select></label>
@@ -673,8 +818,20 @@
             <span id="statusText">就绪</span>
         </div>
         <div class="status-item" id="calcTime"></div>
-        <div class="status-item">
-            <span>Precision: 6 位小数</span>
+        <div class="status-item precision-control">
+            <span>Precision:</span>
+            <select id="statusPrecision">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6" selected>6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+            <span>位小数</span>
         </div>
     </footer>
 
@@ -873,6 +1030,9 @@
         }
 
         // ==================== UI State ====================
+        let calibrationTimes = [];
+        let precision = 6;
+        let snapToCalibration = false;
         let currentCurve = null;
         let chartInstance = null;
 
@@ -898,6 +1058,12 @@
             panels: document.querySelectorAll('.tab-panel'),
             chartContainer: document.getElementById('chartContainer'),
             showKeyframes: document.getElementById('showKeyframes'),
+            calibrationInput: document.getElementById('calibrationInput'),
+            btnAddCalibration: document.getElementById('btnAddCalibration'),
+            btnClearCalibration: document.getElementById('btnClearCalibration'),
+            calibrationDisplay: document.getElementById('calibrationDisplay'),
+            precisionSelect: document.getElementById('precisionSelect'),
+            snapToCalibration: document.getElementById('snapToCalibration'),
             showTangents: document.getElementById('showTangents'),
             showExtrapolation: document.getElementById('showExtrapolation'),
             sampleCount: document.getElementById('sampleCount'),
@@ -935,20 +1101,93 @@
     "m_RotationOrder": 4
   }
 }`;
-
         // ==================== Event Handlers ====================
         function setStatus(ok, text) {
             elements.statusDot.className = 'status-dot ' + (ok ? 'ok' : 'error');
             elements.statusText.textContent = text;
         }
 
-        function formatValue(val) {
-            // Match PowerShell "0.######" - 6 decimal places max, trim trailing zeros
+        function formatValue(val, forcedPrecision) {
+            const p = forcedPrecision !== undefined ? forcedPrecision : precision;
             if (!isFinite(val)) return 'NaN';
-            const str = val.toFixed(6).replace(/\.?0+$/, '');
+            const str = val.toFixed(p).replace(/\.?0+$/, '');
             return str === '-0' ? '0' : str;
         }
 
+
+        function parseCalibrationTimes(text) {
+            if (!text.trim()) return [];
+            const parts = text.split(',').map(s => s.trim()).filter(s => s.length > 0);
+            const times = parts.map(s => {
+                const n = Number(s);
+                if (isNaN(n)) throw new Error(`无法解析时间值: "${s}"`);
+                return n;
+            });
+            times.sort((a, b) => a - b);
+            return times;
+        }
+
+        function updateCalibrationDisplay() {
+            if (calibrationTimes.length === 0) {
+                elements.calibrationDisplay.innerHTML = '';
+                return;
+            }
+            const chips = calibrationTimes.map((t, i) => {
+                let valStr = '?';
+                if (currentCurve) {
+                    const v = getCurveValue(currentCurve.keys, t, elements.respectInfCheckbox.checked, currentCurve.preInf, currentCurve.postInf);
+                    valStr = formatValue(v);
+                }
+                return `<span class="calibration-chip">
+                    <span class="cp-time">t=${t}</span>
+                    <span style="opacity:0.6">→</span>
+                    <span class="cp-value">${valStr}</span>
+                    <button class="cp-remove" data-index="${i}" title="移除">×</button>
+                </span>`;
+            }).join('');
+            elements.calibrationDisplay.innerHTML = chips;
+
+            // Attach remove handlers
+            elements.calibrationDisplay.querySelectorAll('.cp-remove').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = Number(btn.dataset.index);
+                    calibrationTimes.splice(idx, 1);
+                    updateCalibrationDisplay();
+                    if (currentCurve) {
+                        renderResultsWithCalibration();
+                        updateChart();
+                    }
+                });
+            });
+        }
+
+        function renderResultsWithCalibration() {
+            if (!currentCurve) return;
+            const respectInf = elements.respectInfCheckbox.checked;
+            const preInf = currentCurve.preInf;
+            const postInf = currentCurve.postInf;
+            const keys = currentCurve.keys;
+
+            // Default test times
+            const times = new Set();
+            keys.forEach(k => times.add(k.time));
+            for (let i = 0; i < keys.length - 1; i++) {
+                const mid = (keys[i].time + keys[i + 1].time) / 2;
+                times.add(mid);
+            }
+            const first = keys[0].time;
+            const last = keys[keys.length - 1].time;
+            const dur = last - first;
+            [first - 10, first - dur, first - 0.5, last + 0.5, last + 10, last + dur].forEach(t => times.add(t));
+
+            // Merge calibration times
+            calibrationTimes.forEach(t => times.add(t));
+
+            const sortedTimes = Array.from(times).sort((a, b) => a - b);
+            const calSet = new Set(calibrationTimes);
+
+            renderResults(keys, sortedTimes, respectInf, preInf, postInf, calSet);
+        }
         function renderKeyframes(keys) {
             const header = `
                 <div class="keyframe-row header">
@@ -967,7 +1206,8 @@
             elements.keyframesList.innerHTML = header + rows;
         }
 
-        function renderResults(keys, times, respectInf, preInf, postInf) {
+        function renderResults(keys, times, respectInf, preInf, postInf, calibrationSet) {
+            calibrationSet = calibrationSet || new Set();
             if (times.length === 0) {
                 elements.resultsBody.innerHTML = '';
                 elements.emptyTable.style.display = 'flex';
@@ -976,12 +1216,12 @@
 
             elements.emptyTable.style.display = 'none';
             const rows = times.map(t => {
+                const isCal = calibrationSet.has(t);
                 const val = getCurveValue(keys, t, respectInf, preInf, postInf);
                 const type = getSegmentType(keys, t, respectInf, preInf, postInf);
                 const typeClass = 'type-' + type;
                 let detail = '';
                 if (type === 'interp') {
-                    // Find segment
                     for (let i = 0; i < keys.length - 1; i++) {
                         if (t >= keys[i].time && t <= keys[i + 1].time) {
                             detail = `区间 [${keys[i].time.toFixed(3)}, ${keys[i + 1].time.toFixed(3)}]`;
@@ -997,10 +1237,12 @@
                 } else if (type === 'pingpong') {
                     detail = 'PingPong 乒乓模式';
                 }
+                const calBadge = isCal ? '<span class="col-calibration-badge" style="margin-left:6px;">标定</span>' : '';
+                const rowClass = isCal ? ' class="row-calibration"' : '';
                 return `
-                    <tr>
-                        <td class="col-time">${t}</td>
-                        <td class="col-value">${formatValue(val)}</td>
+                    <tr${rowClass}>
+                        <td class="col-time">${formatValue(t, precision + 2)}</td>
+                        <td class="col-value">${formatValue(val)}${calBadge}</td>
                         <td><span class="col-type ${typeClass}">${type}</span></td>
                         <td style="color: var(--text-secondary); font-size: 0.75rem;">${detail}</td>
                     </tr>
@@ -1060,6 +1302,23 @@
                 });
             }
 
+            // Calibration points
+            if (calibrationTimes.length > 0) {
+                const calData = calibrationTimes.map(t => {
+                    const v = getCurveValue(keys, t, respectInf, preInf, postInf);
+                    return { value: [t, v], calibration: true };
+                });
+                series.push({
+                    name: 'Calibration',
+                    type: 'scatter',
+                    data: calData,
+                    symbol: 'diamond',
+                    symbolSize: 14,
+                    itemStyle: { color: '#ffd93d', borderColor: '#ffffff', borderWidth: 2 },
+                    z: 25
+                });
+            }
+
             // Extrapolation zones
             if (elements.showExtrapolation.checked && respectInf) {
                 if (preInf !== INF_CONSTANT) {
@@ -1114,8 +1373,16 @@
                     borderColor: '#0f3460',
                     textStyle: { color: '#e8e8e8' },
                     formatter: function(params) {
-                        const p = params[0];
-                        return `Time: ${p.value[0].toFixed(3)}<br/>Value: ${formatValue(p.value[1])}`;
+                        const snapEnabled = elements.snapToCalibration.checked;
+                        const calPoint = params.find(p => p.seriesName === 'Calibration');
+                        if (snapEnabled && calPoint && calPoint.value) {
+                            return `📌 标定点<br/>Time: ${formatValue(calPoint.value[0], precision + 2)}<br/>Value: ${formatValue(calPoint.value[1])}`;
+                        }
+                        const p = params.find(p => p.seriesName === 'Curve') || params[0];
+                        if (p && p.value) {
+                            return `Time: ${formatValue(p.value[0], precision + 2)}<br/>Value: ${formatValue(p.value[1])}`;
+                        }
+                        return '';
                     }
                 },
                 series: series,
@@ -1147,24 +1414,9 @@
 
                 renderKeyframes(currentCurve.keys);
 
-                // Default test times: keyframe times + midpoints + boundaries
-                const times = new Set();
-                currentCurve.keys.forEach(k => times.add(k.time));
-                for (let i = 0; i < currentCurve.keys.length - 1; i++) {
-                    const mid = (currentCurve.keys[i].time + currentCurve.keys[i + 1].time) / 2;
-                    times.add(mid);
-                }
-                const first = currentCurve.keys[0].time;
-                const last = currentCurve.keys[currentCurve.keys.length - 1].time;
-                const dur = last - first;
-                [first - 10, first - dur, first - 0.5, last + 0.5, last + 10, last + dur].forEach(t => times.add(t));
-
-                const sortedTimes = Array.from(times).sort((a, b) => a - b);
-                const respectInf = elements.respectInfCheckbox.checked;
-
-                renderResults(currentCurve.keys, sortedTimes, respectInf, currentCurve.preInf, currentCurve.postInf);
+                renderResultsWithCalibration();
                 updateChart();
-
+                updateCalibrationDisplay();
                 const elapsed = (performance.now() - startTime).toFixed(2);
                 elements.calcTime.textContent = `耗时: ${elapsed}ms`;
                 setStatus(true, `已解析: ${currentCurve.name} (${currentCurve.keys.length} 关键帧)`);
@@ -1216,6 +1468,84 @@
         [elements.showKeyframes, elements.showTangents, elements.showExtrapolation, elements.sampleCount, elements.rangeExtend].forEach(el => {
             el.addEventListener('change', updateChart);
         });
+
+        // Calibration: add
+        elements.btnAddCalibration.addEventListener('click', () => {
+            const text = elements.calibrationInput.value;
+            try {
+                const times = parseCalibrationTimes(text);
+                if (times.length === 0) return;
+                // Merge with existing (dedup)
+                const existing = new Set(calibrationTimes);
+                times.forEach(t => existing.add(t));
+                calibrationTimes = Array.from(existing).sort((a, b) => a - b);
+                elements.calibrationInput.value = '';
+                updateCalibrationDisplay();
+                if (currentCurve) {
+                    renderResultsWithCalibration();
+                    updateChart();
+                }
+            } catch (e) {
+                setStatus(false, e.message);
+            }
+        });
+
+        // Calibration: clear all
+        elements.btnClearCalibration.addEventListener('click', () => {
+            calibrationTimes = [];
+            elements.calibrationInput.value = '';
+            updateCalibrationDisplay();
+            if (currentCurve) {
+                renderResultsWithCalibration();
+                updateChart();
+            }
+        });
+
+        // Calibration: Enter key in input
+        elements.calibrationInput.addEventListener('keydown', e => {
+            if (e.key === 'Enter') {
+                elements.btnAddCalibration.click();
+            }
+        });
+
+        // Precision: chart control
+        elements.precisionSelect.addEventListener('change', () => {
+            precision = Number(elements.precisionSelect.value);
+            if (currentCurve) {
+                renderResultsWithCalibration();
+                updateChart();
+            }
+        });
+
+        // Precision: status bar
+        elements.statusPrecision = document.getElementById('statusPrecision');
+        if (elements.statusPrecision) {
+            elements.statusPrecision.addEventListener('change', () => {
+                precision = Number(elements.statusPrecision.value);
+                elements.precisionSelect.value = precision;
+                if (currentCurve) {
+                    renderResultsWithCalibration();
+                    updateChart();
+                }
+            });
+        }
+
+        // Snap toggle
+        elements.snapToCalibration.addEventListener('change', updateChart);
+
+        // Sync precision selects
+        function syncPrecision(value) {
+            precision = value;
+            elements.precisionSelect.value = value;
+            if (elements.statusPrecision) elements.statusPrecision.value = value;
+            if (currentCurve) {
+                renderResultsWithCalibration();
+                updateChart();
+            }
+        }
+
+        // Chart controls include new precision + snap
+        // Re-bind to include precisionSelect (already handled above), snapToCalibration (above)
 
         // Keyboard shortcut
         elements.jsonInput.addEventListener('keydown', e => {

@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monokai Pro (Filter Spectrum) 色系全面分析报告</title>
+<style>
+  :root {
+    --bg: #131313;
+    --bg2: #191919;
+    --bg3: #363537;
+    --fg: #f7f1ff;
+    --fg2: #bab6c0;
+    --fg3: #8b888f;
+    --fg4: #525053;
+    --fg5: #69676c;
+    --accent1: #fc618d;
+    --accent2: #fce566;
+    --accent3: #5ad4e6;
+    --accent4: #7bd88f;
+    --accent5: #948ae3;
+    --accent6: #fd9353;
+    --accent7: #f7f1ff;
+    --border: #191919;
+    --card-bg: #222222;
+    --code-bg: #1a1a1a;
+    --card-hover: rgba(255,255,255,0.04);
+    --glow-accent: rgba(252,97,141,0.15);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--fg4); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--fg3); }
+  body {
+    font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+  a { color: var(--accent3); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #131313 0%, #1a1a2e 35%, #2d1b3d 70%, #1a1a2e 100%);
+    padding: 60px 20px 40px;
+    text-align: center;
+    border-bottom: 3px solid var(--accent1);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(252,97,141,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 50%, rgba(90,212,230,0.06) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .hero h1, .hero .subtitle, .hero-meta { position: relative; z-index: 1; }
+  .hero h1 {
+    font-size: 2.4em;
+    font-weight: 700;
+    background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3), var(--accent4), var(--accent5), var(--accent6));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+  .hero .subtitle { color: var(--fg2); font-size: 1.1em; margin-bottom: 24px; }
+  .hero-meta { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; font-size: 0.9em; color: var(--fg3); }
+  .hero-meta span { display: flex; align-items: center; gap: 4px; }
+  .hero-meta .label { color: var(--fg4); }
+
+  /* Palette Preview Strip */
+  .palette-strip {
+    display: flex;
+    height: 80px;
+    border-radius: 0 0 12px 12px;
+    overflow: hidden;
+    margin-top: -1px;
+  }
+  .palette-strip div { flex:1; display:flex; align-items:flex-end; justify-content:center; padding-bottom:8px; font-size:0.75em; font-weight:600; letter-spacing:0.5px; }
+
+  /* Containers */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+  section {
+    padding: 40px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    scroll-margin-top: 20px;
+  }
+  section:last-child { border-bottom: none; }
+
+  h2 {
+    font-size: 1.6em;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--accent1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+  }
+  h2::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent1), transparent);
+  }
+  h2 .num {
+    background: var(--accent1);
+    color: #131313;
+    font-size: 0.7em;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 700;
+  }
+  h3 { font-size: 1.2em; margin: 24px 0 12px; color: var(--fg2); }
+  h4 { font-size: 1em; margin: 16px 0 8px; color: var(--accent3); }
+
+  p, li { max-width: 72ch; }
+
+  /* Color Cards */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .color-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 14px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    transition: transform 0.15s;
+  }
+  .color-card:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.15); }
+  .color-swatch {
+    width: 48px; height: 48px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    border: 2px solid rgba(255,255,255,0.1);
+  }
+  .color-info { flex:1; min-width:0; }
+  .color-hex, td, .color-scopes, .alpha-chip, .region-hex, .code-sample, pre {
+    font-family: 'Maple Mono', 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Consolas', 'Noto Sans Mono', monospace;
+  }
+  .color-hex { font-size: 0.95em; font-weight: 600; }
+  .color-rgb { font-size: 0.8em; color: var(--fg4); font-family: 'Maple Mono', 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Consolas', monospace; }
+  .color-role { font-size: 0.8em; color: var(--accent3); margin-top: 4px; }
+  .color-scopes { font-size: 0.72em; color: var(--fg3); margin-top: 4px; word-break: break-all; }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 20px;
+    font-size: 0.88em;
+  }
+  th, td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  th {
+    background: var(--bg2);
+    color: var(--fg2);
+    font-weight: 600;
+    font-size: 0.85em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  td { font-family: 'Maple Mono', 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Consolas', 'Noto Sans Mono', monospace; font-size: 0.85em; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* Scope Group Cards */
+  .scope-group {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    margin: 12px 0;
+    overflow: hidden;
+  }
+  .scope-group-header {
+    padding: 10px 16px;
+    background: rgba(255,255,255,0.03);
+    font-weight: 600;
+    font-size: 0.95em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .scope-group-header:hover { background: rgba(255,255,255,0.06); }
+  .scope-group-header .arrow { transition: transform 0.2s; display: inline-block; width: 16px; }
+  .scope-group-header.collapsed .arrow { transform: rotate(-90deg); }
+  .scope-group-body { padding: 12px 16px; }
+  .scope-group-body.hidden { display: none; }
+  .scope-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 0;
+    font-size: 0.84em;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+  .scope-row:last-child { border-bottom: none; }
+  .scope-swatch {
+    width: 14px; height: 14px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .scope-name { color: var(--fg2); min-width: 200px; }
+  .scope-desc { color: var(--fg3); flex:1; }
+
+  /* UI Category Cards */
+  .ui-category {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    margin: 10px 0;
+    overflow: hidden;
+  }
+  .ui-cat-header {
+    padding: 10px 16px;
+    background: rgba(255,255,255,0.02);
+    font-weight: 600;
+    font-size: 0.92em;
+    border-left: 3px solid var(--accent1);
+  }
+  .ui-cat-body { padding: 10px 16px; }
+  .ui-cat-body table { font-size: 0.8em; }
+
+  /* Code Block */
+  .code-sample {
+    background: var(--code-bg);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 20px;
+    font-family: 'Maple Mono', 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Consolas', 'Noto Sans Mono', monospace;
+    font-size: 0.82em;
+    line-height: 1.8;
+    overflow-x: auto;
+    margin: 10px 0;
+    white-space: pre;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+  }
+  .code-sample .kw { color: var(--accent1); }
+  .code-sample .tp { color: var(--accent3); }
+  .code-sample .fn { color: var(--accent4); }
+  .code-sample .st { color: var(--accent2); }
+  .code-sample .cm { color: var(--fg5); font-style: italic; }
+  .code-sample .cn { color: var(--accent5); }
+  .code-sample .op { color: var(--accent1); }
+  .code-sample .pr { color: var(--accent6); }
+  .code-sample .vr { color: var(--accent7); }
+  .code-sample .pu { color: var(--fg3); }
+  .code-sample .dt { color: var(--accent3); }
+  .code-sample .pp { color: var(--accent6); }
+
+  /* Badge */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75em;
+    font-weight: 600;
+  }
+  .badge-accent1 { background: var(--accent1); color: #131313; }
+  .badge-accent2 { background: var(--accent2); color: #131313; }
+  .badge-accent3 { background: var(--accent3); color: #131313; }
+  .badge-accent4 { background: var(--accent4); color: #131313; }
+  .badge-accent5 { background: var(--accent5); color: #131313; }
+  .badge-accent6 { background: var(--accent6); color: #131313; }
+  .badge-accent7 { background: var(--accent7); color: #131313; }
+  .badge-muted { background: var(--fg5); color: #e0e0e0; }
+  .badge-structural { background: var(--fg3); color: #e0e0e0; }
+
+  /* Two-col layout */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* Cross-ref matrix */
+  .xrfx { border-collapse: collapse; font-size: 0.8em; }
+  .xrfx th, .xrfx td { padding: 6px 10px; text-align: center; border: 1px solid rgba(255,255,255,0.06); }
+  .xrfx th { background: var(--bg2); }
+  .xrfx .has-color { border-radius: 4px; font-weight: 600; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--fg4);
+    font-size: 0.8em;
+  }
+
+  /* Alpha swatch */
+  .alpha-grid { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0; }
+  .alpha-chip {
+    display:flex; align-items:center; gap:6px;
+    background: var(--card-bg);
+    border:1px solid rgba(255,255,255,0.06);
+    border-radius:6px;
+    padding:6px 10px;
+    font-size:0.8em;
+  }
+  .alpha-chip .swatch { width:20px; height:20px; border-radius:4px; border:1px solid rgba(255,255,255,0.15); }
+
+  /* TOC */
+  .toc {
+    background: var(--card-bg);
+    border:1px solid rgba(255,255,255,0.06);
+    border-radius:12px;
+    padding:16px 20px;
+    margin:16px 0;
+    font-size:0.88em;
+  }
+  .toc ol { padding-left: 20px; }
+  .toc li { margin: 6px 0; }
+  .toc a { color: var(--fg); transition: color 0.2s; }
+  .toc a:hover { color: var(--accent1); text-decoration: none; }
+
+  /* Region swatch group */
+  .region-row { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
+  .region-row:last-child { border-bottom:none; }
+  .region-swatch { width:32px; height:32px; border-radius:6px; border:1px solid rgba(255,255,255,0.15); }
+  .region-label { font-size:0.85em; flex:1; }
+  .region-hex { font-family:monospace; font-size:0.8em; color:var(--fg3); }
+</style>
+</head>
+<body>
+
+<!-- ========== HERO ========== -->
+<div class="hero">
+  <h1>Monokai Pro (Filter Spectrum)</h1>
+  <div class="subtitle">完整色系分析报告 · Comprehensive Color Analysis Report</div>
+  <div class="hero-meta">
+    <span><span class="label">类型</span> Dark</span>
+    <span><span class="label">作者</span> Monokai</span>
+    <span><span class="label">UUID</span> 232025ba-7bfe-5c28-abce-d50d6d51ed55</span>
+    <span><span class="label">色彩空间</span> sRGB</span>
+    <span><span class="label">语法标记</span> 171 条目 → 304 条作用域规则</span>
+    <span><span class="label">UI 颜色</span> 596 枚</span>
+  </div>
+  <div class="palette-strip" id="paletteStrip"></div>
+</div>
+
+<div class="container">
+
+<!-- ========== TOC ========== -->
+<div class="toc">
+  <strong>目录</strong>
+  <ol>
+    <li><a href="#palette">核心调色板 — 12 色语法系统</a></li>
+    <li><a href="#alpha">Alpha 透明度色变体</a></li>
+    <li><a href="#syntax">语法高亮系统 — 按作用域分组</a></li>
+    <li><a href="#lang">语言特定作用域映射</a></li>
+    <li><a href="#ui">UI 界面颜色 — VS Code 功能区域</a></li>
+    <li><a href="#cross">色彩交叉使用矩阵</a></li>
+    <li><a href="#fontstyle">字体风格分布</a></li>
+    <li><a href="#insights">关键洞察与模式总结</a></li>
+  </ol>
+</div>
+
+<!-- ========== 1. PALETTE ========== -->
+<section id="palette">
+  <h2>核心调色板 <span class="num">12 色</span></h2>
+  <p>Monokai Pro (Filter Spectrum) 的语法高亮系统由 <strong>12 种核心前景色</strong> 构成，每种颜色对应特定的语义角色。这 12 个颜色共同定义了语言的视觉层次：</p>
+
+  <div class="color-grid" id="fgPalette"></div>
+
+  <h3>7 种背景标记色（Alpha 35%）</h3>
+  <p>用于 <code>region.*</code> 标记，为编辑器中的代码区域提供色彩标识：</p>
+  <div class="alpha-grid" id="bgPalette"></div>
+
+  <h3>3 种 UI 专用背景色</h3>
+  <div class="alpha-grid" id="uiBgPalette"></div>
+</section>
+
+<!-- ========== 2. ALPHA ========== -->
+<section id="alpha">
+  <h2>Alpha 透明度色变体 <span class="num">26 枚</span></h2>
+  <p>以下展示所有 26 个带 Alpha 通道的颜色的完整数据：</p>
+  <table>
+    <thead><tr><th>8 位 Hex</th><th>基础色</th><th>Alpha</th><th>用途</th></tr></thead>
+    <tbody id="alphaTable"></tbody>
+  </table>
+</section>
+
+<!-- ========== 3. SYNTAX ========== -->
+<section id="syntax">
+  <h2>语法高亮系统 <span class="num">28 类作用域</span></h2>
+  <p>全部 <strong>304 条作用域规则</strong>按 <strong>28 个顶级作用域类别</strong>分类。以下用可折叠卡片展示每个类别的完整作用域映射及配色逻辑。</p>
+
+  <div id="scopeGroups"></div>
+</section>
+
+<!-- ========== 4. LANG ========== -->
+<section id="lang">
+  <h2>语言特定作用域映射</h2>
+  <p>以下表格展示每种语言/技术栈在语法标记中使用的 <strong>作用域前缀 → 颜色 → 语义</strong> 映射：</p>
+  <table>
+    <thead><tr><th>语言 / 技术</th><th>作用域前缀</th><th>使用颜色</th><th>语义说明</th></tr></thead>
+    <tbody id="langTable"></tbody>
+  </table>
+
+  <h3>代码示例：各语言的配色展示</h3>
+  <div class="code-sample"><span class="cm"># Python — 关键字青色 · 字符串橙色 · 函数绿色 · 注释灰色</span>
+<span class="kw">def</span> <span class="fn">process_data</span>(<span class="pr">input_list</span>: <span class="dt">List</span>[<span class="dt">str</span>]) -> <span class="dt">int</span>:
+    <span class="cm"># 处理输入数据并返回计数</span>
+    <span class="kw">total</span> = <span class="cn">0</span>
+    <span class="kw">for</span> <span class="pr">item</span> <span class="kw">in</span> <span class="pr">input_list</span>:
+        <span class="kw">if</span> <span class="pr">item</span>.<span class="fn">strip</span>():
+            <span class="pr">total</span> += <span class="cn">1</span>
+    <span class="kw">return</span> <span class="pr">total</span>
+
+<span class="cm"># JavaScript — 关键字珊瑚红 · 模板字符串黄色 · 类蓝色</span>
+<span class="kw">class</span> <span class="tp">Component</span> <span class="kw">extends</span> <span class="tp">React</span>.<span class="tp">PureComponent</span> {
+  <span class="kw">const</span> <span class="pr">message</span> = <span class="st">`Hello, ${name}!`</span>;
+  <span class="kw">return</span> &lt;<span class="tp">div</span> <span class="pr">className</span>=<span class="st">"wrapper"</span>&gt;...&lt;/<span class="tp">div</span>&gt;;
+}
+
+<span class="cm"># Rust — 类型蓝色 · 生命周期粉红色 · 关键字珊瑚红</span>
+<span class="kw">impl</span>&lt;<span class="tp">T</span>: <span class="dt">Clone</span>&gt; <span class="tp">MyStruct</span>&lt;<span class="tp">'a</span>, T&gt; {
+    <span class="kw">fn</span> <span class="fn">new</span>(value: <span class="dt">String</span>) -> <span class="dt">Self</span> {
+        <span class="dt">Self</span> { <span class="pr">value</span>: value.<span class="fn">to_string</span>() }
+    }
+}</span></div>
+
+  <div class="code-sample"><span class="cm">/* CSS/SCSS — 选择器绿色 · 属性ID橙色 · 变量橙红色 */</span>
+<span class="dt">.container</span> {
+  <span class="pr">--primary-color</span>: <span class="pr">#fc618d</span>;  <span class="cm">/* 变量引用 — 橙色 */</span>
+  <span class="pp">#header</span> {
+    <span class="pr">background</span>: <span class="pr">var(--primary-color)</span>;
+  }
+  <span class="dt">.card:hover</span> {
+    <span class="pr">border-color</span>: <span class="pr">#5ad4e6</span>;  <span class="cm">/* 类型/颜色值 — 天蓝 */</span>
+  }
+}
+
+<span class="cm">/* YAML — 映射键珊瑚红 · 字符串绿色 */</span>
+<span class="pr">server:</span>
+  <span class="pr">host</span>: <span class="st">"localhost"</span>
+  <span class="pr">port</span>: <span class="cn">8080</span>
+  <span class="pr">features:</span>
+    <span class="pr">- name</span>: <span class="st">"auth"</span>
+
+<span class="cm">/* JSON — 键白色 · 值紫色 · 字符串黄色 */</span>
+{
+  <span class="st">"name"</span>: <span class="st">"Monokai Spectrum"</span>,
+  <span class="st">"version"</span>: <span class="cn">2.0.13</span>,
+  <span class="st">"type"</span>: <span class="st">"dark"</span>,
+  <span class="st">"colors"</span>: { <span class="st">"editor.background"</span>: <span class="st">"#222222"</span> }
+}</span></div>
+
+  <div class="code-sample"><span class="cm">/* Markdown — 标题黄色 · 链接绿色 · 删除线红色 · 引用灰色 */</span>
+<span class="dt"># 一级标题</span>
+<span class="dt">## 二级标题</span>
+
+常规文本，包含**粗体**和*斜体*强调。
+
+- 列表项 A
+- 列表项 B
+  - 嵌套项
+
+&gt; 引用块 — 使用 <span class="fg5">#69676c</span> 灰色 italic 样式
+
+行内 <span class="dt">`code</span>` 和 [链接](#anchor) — 链接绿色
+
+--- 删除线使用 ~~珊瑚红~~
+
+<div class="code-sample" style="background:#222222;border-color:#fce566;">
+<span class="cm">/* Git Diff — 新增绿色 · 删除红色 · 头部黄色 */</span>
+<span class="dt">@@ -10,6 +10,8 @@</span>
+ function process(input) {
++  const result = validate(input); <span class="cm">// 新增行 — 绿色背景</span>
+   return result;
+-  return oldResult;             <span class="cm">/* 删除行 — 红色背景 */</span>
++  return result ?? defaultValue; <span class="cm">// 新增行</span>
+ }</div>
+</div>
+</section>
+
+<!-- ========== 5. UI ========== -->
+<section id="ui">
+  <h2>UI 界面颜色 <span class="num">146 类别 · 596 枚</span></h2>
+  <p>VS Code 主题 UI 颜色按功能区域分为以下 <strong>16 个大类</strong>，共 146 个独立 token：</p>
+
+  <div id="uiCategories"></div>
+</section>
+
+<!-- ========== 6. CROSS-REF ========== -->
+<section id="cross">
+  <h2>色彩交叉使用矩阵</h2>
+  <p>以下颜色在 <strong>语法高亮</strong>（token rules）和 <strong>UI 界面</strong>（theme colors）中<em>同时出现</em>，体现了 Monokai Spectrum 色彩的一致性：</p>
+  <table>
+    <thead><tr><th>颜色</th><th>HEX</th><th>语法作用（举例）</th><th>UI 用途（举例）</th><th>共用含义</th></tr></thead>
+    <tbody id="crossTable"></tbody>
+  </table>
+</section>
+
+<!-- ========== 7. FONTSTYLE ========== -->
+<section id="fontstyle">
+  <h2>字体风格分布</h2>
+  <table>
+    <thead><tr><th>风格</th><th>数量</th><th>占比</th><th>典型场景</th></tr></thead>
+    <tbody>
+<tr><td>— (纯文本)</td><td>263</td><td>86.5%</td><td>绝大多数语法标记，无特殊强调</td></tr>
+      <tr><td><em>斜体</em></td><td>34</td><td>11.2%</td><td>JSDoc 注释、类型注解、CSS 变量、参数、Python self/cls</td></tr>
+      <tr><td><strong>粗体</strong></td><td>1</td><td>0.3%</td><td><code>markup.bold</code> — Diff 加粗</td></tr>
+      <tr><td><u>下划线</u></td><td>1</td><td>0.3%</td><td><code>markup.underline</code> — Markdown 下划线</td></tr>
+      <tr><td><em> + <u>斜体+下划线</u></em></td><td>2</td><td>0.7%</td><td><code>invalid</code> 和 <code>invalid.deprecated</code> — 错误/废弃元素</td></tr>
+      <tr><td>normal</td><td>3</td><td>1.0%</td><td><code>storage.type.extends</code>、<code>storage.type.function.arrow</code>（覆盖语法斜体）、<code>support.type.property-name</code>（JSON 键覆盖默认斜体）</td></tr>
+      <tr style="font-weight:700"><td>总计</td><td>304</td><td>100%</td><td></td></tr>
+    </tbody>
+  </table>
+  <p>字体风格在语言层面有清晰的规律：<strong>斜体</strong>主要用于<em>元信息级别</em>的标记（类型注解、函数自参数、文档标签、预处理指令），而<strong>功能关键词</strong>几乎全部使用纯文本。这种设计确保了"语义核心"与"元信息"的视觉分离。</p>
+</section>
+
+<!-- ========== 8. INSIGHTS ========== -->
+<section id="insights">
+  <h2>关键洞察与模式总结</h2>
+
+  <h3>🎨 色彩层级结构</h3>
+  <div class="two-col">
+    <div>
+      <h4>前景色层级（视觉重量从重到轻）</h4>
+      <ol style="padding-left:20px;">
+        <li><strong>#fc618d</strong> (珊瑚红) — 最高权重：语言关键字、运算符、HTML/XML 标签、存储类型、错误</li>
+        <li><strong>#fce566</strong> (琥珀黄) — 高权重：字符串、标题、diff 修改、搜索匹配</li>
+        <li><strong>#5ad4e6</strong> (天蓝) — 中-高权重：类型、类名、命名空间、Rust 关键字、CSS 选择器</li>
+        <li><strong>#7bd88f</strong> (薄荷绿) — 中权重：函数名、支持函数、类引用、diff 新增、链接</li>
+        <li><strong>#fd9353</strong> (暖橙) — 中权重：参数、CSS 标识符、占位符、符号</li>
+        <li><strong>#f7f1ff</strong> (淡紫白) — 基础文本：源代码主体、JSON 键、变量、对象成员</li>
+        <li><strong>#948ae3</strong> (淡紫) — 低权重：常量、数字、正则表达式、行号</li>
+        <li><strong>#bab6c0</strong> (银灰) — 实体名（注释内）、标点定义、伪类</li>
+        <li><strong>#69676c</strong> (冷灰) — 注释、文档字符串、最弱对比度</li>
+      </ol>
+    </div>
+    <div>
+      <h4>结构性色彩</h4>
+      <p><strong>#8b888f</strong> (中灰) 是唯一的"结构色"：</p>
+      <ul>
+        <li>所有标点符号（括号、逗号、分号）</li>
+        <li>元 braces（<code>meta.brace.*</code>）</li>
+        <li>Jinja2 分隔符（<code>entity.other.jinja2.delimiter</code>）</li>
+        <li>Git 元信息（author、date、commit hash）</li>
+        <li>Shell 变量分隔符（<code>keyword.operator.type.annotation</code>）</li>
+      </ul>
+      <p>这确保了代码结构骨架始终以"低存在感"方式呈现，不会与语义着色冲突。</p>
+
+      <h4>色彩心理学映射</h4>
+      <table>
+        <thead><tr><th>色调</th><th>颜色</th><th>心理暗示</th><th>对应语义</th></tr></thead>
+        <tbody>
+          <tr><td>🔴 红系</td><td>#fc618d</td><td>紧迫、活跃、控制流</td><td>关键字、运算符、标签、错误</td></tr>
+          <tr><td>🟡 黄系</td><td>#fce566</td><td>注意、价值、可见性</td><td>字符串、标题、高亮</td></tr>
+          <tr><td>🔵 蓝系</td><td>#5ad4e6</td><td>逻辑、类型、系统</td><td>类型、类、命名空间、规范</td></tr>
+          <tr><td>🟢 绿系</td><td>#7bd88f</td><td>功能、增长、正向</td><td>函数、支持、链接、新增</td></tr>
+          <tr><td>🟠 橙系</td><td>#fd9353</td><td>参数、配置、边界</td><td>参数、CSS 标识符、占位符</td></tr>
+          <tr><td>🟣 紫系</td><td>#948ae3</td><td>抽象、常量、元信息</td><td>常量、数字、变量、搜索</td></tr>
+          <tr><td>⚫ 灰系</td><td>#8b888f #69676c</td><td>安静、背景、结构</td><td>标点、注释、结构骨架</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <h3>🔍 值得注意的模式</h3>
+  <ul>
+    <li><strong>Rust 语言的重度定制</strong> — 存在大量以 <code>rust</code> 为后缀的作用域（如 <code>keyword.other.rust</code>），且同一个作用域可能因"调整蓝至红"而有两次不同颜色定义。</li>
+    <li><strong>CSS/SCSS/LESS 统一使用橙色 (#fd9353)</strong> 作为变量引用的颜色，形成视觉一致性。</li>
+    <li><strong>Python 自参数特殊处理</strong> — <code>self</code> 和 <code>cls</code> 使用 <code>variable.parameter.function.language.special</code> 专门作用域，着色为 <strong>银灰 #bab6c0 + 斜体</strong>，与普通参数（橙色）区分。</li>
+    <li><strong>Diff 语义完全由前景色驱动</strong> — 新增用绿色 (#7bd88f)、删除用珊瑚红 (#fc618d)、修改用琥珀 (#fce566)、头部用黄色，无需背景色变化即可传达语义。</li>
+    <li><strong>Region 标记系统</strong> — 8 种区域色（蓝、绿、橙、粉红、紫、红、白、黄）均使用自身颜色 + 35% 透明度作为背景，同时以不透明前景色显示文字标签。</li>
+    <li><strong>UI 背景使用 3 种灰度阶</strong> — <code>#131313</code> (主背景) → <code>#191919</code> (侧栏/活动栏) → <code>#222222</code> (编辑器区域) → <code>#363537</code> (面板/下拉)，形成精确的层级对比。</li>
+    <li><strong>Terminal ANSI 色完全复用语法色板</strong> — 终端的 16 色 ANSI 配色直接对应了语法高亮颜色，确保终端代码与编辑器内一致。</li>
+  </ul>
+</section>
+
+</div><!-- .container -->
+
+<div class="footer">
+  <p>Monokai Pro (Filter Spectrum) · Generated from <code>Monokai Pro (Filter Spectrum).json</code> · 
+  数据截至 2026-07-26 · 共 171 tokenColor 条目、304 作用域规则、596 UI 颜色标记</p>
+</div>
+
+<!-- ========== JAVASCRIPT: Dynamic content ========== -->
+<script>
+(function() {
+  // ── DATA ──
+  var fgColors = [
+    {hex:'#69676c', rgb:'(105, 103, 108)', role:'评论 / 文档字符串 — 最低对比度，冷灰色', scopes:'comment, comment keyword, comment string, comment punctuation, punctuation.definition.comment, string.quoted.docstring, editorCodeLens.foreground, editorGhostText.foreground, editorLineNumber.foreground, editorRuler.foreground, focusBorder, descriptionForeground, progressBar.background, input.placeholderForeground, scrollbar.shadow, widget.shadow, gitDecoration.ignoredResourceForeground', cssVar:'--fg5'},
+    {hex:'#bab6c0', rgb:'(186, 182, 192)', role:'次要点 — 实体名、标点定义、伪类选择器', scopes:'comment entity.name.tag, punctuation.definition.entity.css, entity.other.pseudo-class.css, entity.other.pseudo-element.css, variable.language, punctuation, punctuation.accessor, punctuation.definition.block, punctuation.definition.group.begin.ruby, punctuation.definition.group.end.ruby, punctuation.definition.group.begin.css, punctuation.definition.group.end.css, punctuation.terminator, punctuation.separator.parameter, meta.brace.round, meta.brace.square, meta.type.storage.modifier.array, meta.brackets.entity.name.function.operator, source.sass, source.scss, source.css variable.other, source.scss variable.scss, variable.annotation.rust', cssVar:'--fg2'},
+    {hex:'#7bd88f', rgb:'(123, 216, 143)', role:'功能 / 类 / 字符串 — 薄荷绿', scopes:'entity.name, entity.name.function.templated, support.function, markup.underline.link, markup.inserted, meta.instance.constructor, string.other.ref, source.jinja2 variable.other.jinja2.block, variable.function, meta.function-call.generic.python, entity.other.attribute-name.class.css, entity.other.animation-name.css, terminalCommandDecoration.successBackground, gitDecoration.addedResourceForeground, diffEditorOverview.insertedForeground', cssVar:'--accent4'},
+    {hex:'#5ad4e6', rgb:'(90, 212, 230)', role:'类型 / 类名 / 命名空间 / CSS 类 — 天蓝色', scopes:'entity.name.type, entity.name.type.namespace, entity.name.class, entity.name.namespace, support.class, support.constant, variable.other.class, storage.type, storage.type.rust, keyword.other.rust, keyword.other.fn.rust, comment.git-status.header.local, region.bluish, editorInfo.foreground, terminal.ansiCyan, terminal.ansiBrightCyan, symbolIcon.classForeground', cssVar:'--accent3'},
+    {hex:'#fc618d', rgb:'(252, 97, 141)', role:'🔴 主强调色 — 关键字 / 运算符 / 标签 / 错误', scopes:'keyword, keyword.control, keyword.operator, storage, storage.modifier, storage.type, entity.name.tag, invalid, markup.deleted, punctuation.definition.template-expression.begin, punctuation.template-string.element.begin, string.quoted.template.punctuation.definition.string.begin, string.regexp.punctuation.definition.string.begin, source.vue support.class.component, editorError.foreground, editorBracketHighlight.foreground1, editorOverviewRuler.deletedForeground, terminal.ansiRed, terminal.ansiBrightRed, gitDecoration.deletedResourceForeground', cssVar:'--accent1'},
+    {hex:'#fce566', rgb:'(252, 229, 102)', role:'字符串 / 标题 / 修改 — 琥珀黄', scopes:'string, markup.heading, markup.changed, constant.numeric.line-number.match.find-in-files, entity.name.section, entity.name.operator.custom-literal.string, comment.other.git-status.head, region.yellowish, meta.diff.git-diff.header, editorBracketHighlight.foreground3, terminal.ansiYellow, terminal.ansiBrightYellow, gitDecoration.modifiedResourceForeground, terminalCommandDecoration.defaultBackground', cssVar:'--accent2'},
+    {hex:'#948ae3', rgb:'(148, 138, 227)', role:'常量 / 数字 / 变量 — 淡紫色', scopes:'constant, constant.language, constant.numeric, constant.other.caps, constant.other.character-class.escape, constant.other.citation.latex, constant.other.color, constant.other.java, constant.other.key, constant.other.property, constant.other.symbol, variable.annotation, variable.annotation.rust, variable.language.arguments, variable.constant, constant.other.citation.latex, meta.annotation.rust, region.purplish, meta.preprocessor, editorHint.foreground', cssVar:'--accent5'},
+    {hex:'#fd9353', rgb:'(253, 147, 83)', role:'参数 / CSS 标识符 / SASS 变量 — 暖橙', scopes:'constant.other.placeholder, constant.other.symbol, entity.other.attribute-name.id.css, invalid.deprecated, markup.raw, meta.interpolation, meta.property-list.css.variable.other, punctuation.section.embedded, source.sass variable.other, source.scss variable.other, source.css variable.other, source.less variable.other, variable.parameter, parameter.variable.function, parameters.variable.function, variable.other.substitution, source.git-show.meta.diff.range.unified, terminal.ansiBlue, terminal.ansiBrightBlue, scmGraph.foreground2, symbolIcon.keyForeground', cssVar:'--accent6'},
+    {hex:'#f7f1ff', rgb:'(247, 241, 255)', role:'📝 基础文本 — 源代码主体文字', scopes:'source, text, text.find-in-files, constant.other, entity.name.operator.custom-literal, string.source, support.type.property-name, variable, variable.other, variable.other.readwrite, variable.other.member, variable.other.property, meta.object.member, meta.function-call.python meta.function-call.arguments.python, source.json meta.mapping.key string, source.git-show.commit.sha, peekViewResult.selectionForeground, terminal.ansiWhite, terminal.ansiBrightWhite, debugIcon.continueForeground, breadcrumb.activeSelectionForeground', cssVar:'--fg'},
+    {hex:'#8b888f', rgb:'(139, 136, 143)', role:'🏗 结构骨架 — 标点 / Jinja2 / Git 元信息', scopes:'punctuation, punctuation.accessor, punctuation.definition.block, punctuation.definition.tag, punctuation.separator.parameter, punctuation.terminator, meta.brace.round, meta.brace.square, meta.brace.curly, meta.delimiter.comma.js, meta.function-call.without-arguments.js, entity.other.jinja2.delimiter, keyword.operator.heading.restructuredtext, keyword.other.substitution, keyword.other.parenthesis.elm, support.constant.handlebars, support.function.delimiter.elm, source.sass, source.scss, source.git-show.author, source.git-show.date, source.git-diff.command, breadcrumb.foreground, sideBar.foreground, miniMap.findMatchHighlight, scrollbar.shadow, descriptionForeground', cssVar:'--fg3'},
+    {hex:'#525053', rgb:'(82, 80, 83)', role:'📌 次弱文本 — 行号 / 非活跃前景', scopes:'constant.numeric.line-number.find-in-files, activityBar.inactiveForeground, activityBarTop.inactiveForeground, sideBarTitle.foreground, titleBar.inactiveForeground, editorLineNumber.foreground, editorRuler.foreground, editorWhitespace.foreground, list.inactiveSelectionForeground, list.inactiveFocusBackground, statusBar.foreground, statusBar.noFolderForeground, panelTitle.inactiveForeground, inputOption.inactiveForeground', cssVar:'--fg4'},
+    {hex:'#FFFFFF', rgb:'(255, 255, 255)', role:'纯白 — ST3 非彩色化区域的白色', scopes:'region.whitish', cssVar:'#FFFFFF'}
+  ];
+
+  var bgColors = [
+    {hex:'#5ad4e659', base:'#5ad4e6', alpha:'35%', use:'region.bluish 背景'},
+    {hex:'#7bd88f59', base:'#7bd88f', alpha:'35%', use:'region.greenish 背景'},
+    {hex:'#948ae359', base:'#948ae3', alpha:'35%', use:'region.purplish 背景'},
+    {hex:'#fc618d59', base:'#fc618d', alpha:'35%', use:'region.redish / region.pinkish 背景'},
+    {hex:'#fce56659', base:'#fce566', alpha:'35%', use:'region.yellowish 背景'},
+    {hex:'#fd935359', base:'#fd9353', alpha:'35%', use:'region.orangish 背景'},
+    {hex:'#FFFFFF', base:'#FFFFFF', alpha:'100%', use:'region.whitish 前景色（纯白）'}
+  ];
+
+  var uiBgColors = [
+    {hex:'#131313', rgb:'(19, 19, 19)', use:'activityBar, activityBar.border, editorGroup.emptyBackground'},
+    {hex:'#191919', rgb:'(25, 25, 25)', use:'activityBarTop, sideBar, sideBarSectionHeader, commandCenter'},
+    {hex:'#222222', rgb:'(34, 34, 34)', use:'editor.background, editorGroupHeader.tabsBackground, activityBarBadge.foreground, editorGutter.background'}
+  ];
+
+  var alphaData = [
+    {hex8:'#fce56659', base:'#fce566', a:'35%', use:'region.yellowish 背景'},
+    {hex8:'#fd935359', base:'#fd9353', a:'35%', use:'region.orangish 背景'},
+    {hex8:'#fc618d59', base:'#fc618d', a:'35%', use:'region.redish / region.pinkish 背景'},
+    {hex8:'#7bd88f59', base:'#7bd88f', a:'35%', use:'region.greenish 背景'},
+    {hex8:'#5ad4e659', base:'#5ad4e6', a:'35%', use:'region.bluish 背景'},
+    {hex8:'#948ae359', base:'#948ae3', a:'35%', use:'region.purplish 背景'},
+    {hex8:'#948ae3', base:'#948ae3', a:'100%', use:'meta.paragraph.markdown 硬换行背景'},
+    {hex8:'#f7f1ff26', base:'#f7f1ff', a:'15%', use:'editor.findMatchBackground, editor.selectionHighlight, diffEditorOverview.insertedForeground (alpha)'},
+    {hex8:'#f7f1ff0c', base:'#f7f1ff', a:'5%', use:'editor.lineHighlightBackground, editor.foldBackground, editor.hoverHighlightBackground'},
+    {hex8:'#bab6c026', base:'#bab6c0', a:'15%', use:'editor.selectionBackground, scrollbarSlider.background, list.activeSelectionForeground alpha'},
+    {hex8:'#69676ca5', base:'#69676c', a:'65%', use:'minimap.selectionOccurrenceHighlight'},
+    {hex8:'#8b888fa5', base:'#8b888f', a:'65%', use:'minimap.findMatchHighlight'},
+    {hex8:'#fc618da5', base:'#fc618d', a:'65%', use:'diffEditorOverview.removedForeground, minimap.errorHighlight'},
+    {hex8:'#7bd88fa5', base:'#7bd88f', a:'65%', use:'diffEditorOverview.insertedForeground, mergeEditor.conflict.handled.minimapOverViewRuler'},
+    {hex8:'#948ae3a5', base:'#948ae3', a:'65%', use:'minimap.chatEditHighlight'},
+    {hex8:'#5ad4e6a5', base:'#5ad4e6', a:'65%', use:'minimap.infoHighlight'},
+    {hex8:'#fd9353a5', base:'#fd9353', a:'65%', use:'minimap.warningHighlight'},
+    {hex8:'#fc618d19', base:'#fc618d', a:'10%', use:'diffEditor.removedLineBackground, merge.currentContentBackground, minimapGutter.deletedBackground'},
+    {hex8:'#7bd88f19', base:'#7bd88f', a:'10%', use:'diffEditor.insertedLineBackground, merge.incomingContentBackground, minimapGutter.addedBackground'},
+    {hex8:'#f7f1ff19', base:'#f7f1ff', a:'10%', use:'merge.commonContentBackground, mergeEditor.change.background, mergeEditor.conflict.unhandled...'},
+    {hex8:'#f7f1ff26', base:'#f7f1ff', a:'15%', use:'merge.commonHeaderBackground, merge.incomingHeaderBackground'},
+    {hex8:'#fc618d26', base:'#fc618d', a:'15%', use:'merge.currentHeaderBackground'},
+    {hex8:'#363537', base:'#363537', a:'100%', use:'panel.background, editorHoverWidget.background, editorWidget.background, debugToolBar.background'},
+    {hex8:'#191919bf', base:'#191919', a:'75%', use:'sideBar.dropBackground, editorGroup.dropBackground, notificationToast.border'}
+  ];
+
+  // ── SCOPE GROUPS DATA ──
+  var scopeGroups = [
+    {name:'comment', desc:'注释 — 包括行内注释、块注释、JSDoc、PHPDoc、Git 状态头部', fg:'#69676c', cssVar:'--fg5'},
+    {name:'comment keyword', desc:'注释内关键字 — PHPDoc/JSDoc 标签（如 @param, @type）及 TODO/FIXME 标记', scopes:'comment keyword', fg:'#69676c / #bab6c0 / #948ae3', cssVar:'--fg5'},
+    {name:'constant', desc:'常量 — 字面量、数字、布尔值、null、字符转义、正则字符类', fg:'#948ae3', cssVar:'--accent5'},
+    {name:'entity', desc:'实体名 — 类名、函数名、结构体名、标签名、命名空间、CSS 类/ID/伪类', fg:'#7bd88f / #5ad4e6', cssVar:'--accent4'},
+    {name:'invalid', desc:'无效 / 废弃标记 — 错误语法、已弃用元素（斜体+下划线）', fg:'#fc618d', cssVar:'--accent1'},
+    {name:'keyword', desc:'关键字 — 控制流、声明、运算符、模板字面量起止、特殊 Rust 关键字', fg:'#fc618d', cssVar:'--accent1'},
+    {name:'markup', desc:'标记 — Diff 增/删/改、Markdown 标题/加粗/引用/链接、引用块', fg:'#fce566 / #7bd88f', cssVar:'--accent2'},
+    {name:'meta', desc:'元信息 — 模板字符串插值、函数调用上下文、函数参数、diff header、Jinja 变量', fg:'#fd9353 / #f7f1ff', cssVar:'--accent6'},
+    {name:'punctuation', desc:'标点 — 所有括号、逗号、分号、冒号、引号起止、模板表达式边界', fg:'#8b888f', cssVar:'--fg3'},
+    {name:'source', desc:'源级别 — 基础源代码、Shell/Git/JSON/YAML/模板语言特定结构', fg:'#f7f1ff', cssVar:'--fg'},
+    {name:'storage', desc:'存储修饰 — static、const、inline、pub、visibility、继承(extends)、箭头函数', fg:'#fc618d / #5ad4e6', cssVar:'--accent1'},
+    {name:'string', desc:'字符串字面量 — 普通文本、docstring、模板字符串边界、正则起止、git 状态远程', fg:'#fce566 / #fc618d', cssVar:'--accent2'},
+    {name:'string punctuation', desc:'字符串内标点 — 引号起止、模板字符串边界', fg:'#8b888f / #fc618d', cssVar:'--fg3'},
+    {name:'string source', desc:'字符串内源代码 — 模板字符串中的代码部分', fg:'#f7f1ff', cssVar:'--fg'},
+    {name:'string source punctuation', desc:'字符串内源代码的标点 — 模板字符串中嵌入的标点符号', fg:'#8b888f', cssVar:'--fg3'},
+    {name:'support', desc:'支持函数/类 — 标准库函数、内置类型、句柄起止、CSS vendor prefix', fg:'#5ad4e6 / #7bd88f / #8b888f', cssVar:'--accent3'},
+    {name:'text', desc:'基础文本 — 纯文本内容、搜索结果', fg:'#f7f1ff', cssVar:'--fg'},
+    {name:'variable', desc:'变量 — 普通变量、类变量、实例变量、枚举成员、属性、参数、自参数(self/cls)', fg:'#f7f1ff / #fd9353', cssVar:'--fg'},
+    {name:'parameters variable', desc:'参数变量 — 函数参数列表中的参数（斜体强调）', fg:'#fd9353', cssVar:'--accent6'},
+    {name:'region', desc:'区域标记 — Editor 折叠区域的颜色标识（蓝/绿/橙/粉红/紫/红/白/黄）', fg:'#5ad4e6 / #7bd88f / #fc618d / #fce566 / #948ae3 / #fd9353 / #FFFFFF', cssVar:'--accent3'},
+    {name:'comment support', desc:'注释中的支持元素 — 注释内的语言特性标记', fg:'#69676c', cssVar:'--fg5'},
+    {name:'comment entity', desc:'注释内的实体名 — JSDoc 实体名、标签、类型引用', fg:'#bab6c0', cssVar:'--fg2'},
+    {name:'comment markup', desc:'注释内标记 — 注释中的链接装饰', fg:'#69676c', cssVar:'--fg5'},
+    {name:'comment punctuation', desc:'注释内标点 — 注释起始/结束符', fg:'#69676c', cssVar:'--fg5'},
+    {name:'comment string', desc:'注释内字符串 — 注释中的字符串字面量', fg:'#69676c', cssVar:'--fg5'},
+    {name:'comment storage', desc:'注释内存储 — JSDoc 类型标记', fg:'#69676c', cssVar:'--fg5'},
+    {name:'comment variable', desc:'注释内变量 — JSDoc 变量引用', fg:'#bab6c0', cssVar:'--fg2'},
+    {name:'comment text', desc:'注释文本 — 注释中的纯文本内容', fg:'#69676c', cssVar:'--fg5'}
+  ];
+
+  // ── UI CATEGORIES DATA ──
+  var uiCategories = [
+    {name:'Editor', tokens:27, color:'#f7f1ff', items:[
+      ['editor.background','#222222','编辑器背景'],
+      ['editor.foreground','#f7f1ff','编辑器默认前景'],
+      ['editor.lineHighlightBackground','#f7f1ff0c','当前行高亮背景 (5%)'],
+      ['editor.selectionBackground','#bab6c026','选中文本背景 (15%)'],
+      ['editor.findMatchBackground','#f7f1ff26','搜索匹配背景 (15%)'],
+      ['editorBracketHighlight.foreground1-6','#fc618d → #948ae3','括号匹配高亮 (6色循环)'],
+      ['editorInlayHint','#363537 bg / #8b888f fg','内联类型提示'],
+      ['editorSuggestWidget','#363537 bg','自动补全下拉'],
+      ['editorGhostText.foreground','#69676c','Ghost text (代码补全预览)'],
+      ['editorGutter','#222222','行号区域背景'],
+      ['editorLineNumber.foreground','#525053','行号颜色'],
+      ['editorCodeLens.foreground','#69676c','代码透镜引用计数'],
+      ['editorOverviewRuler','多种颜色','迷你地图标尺（增/删/改/改匹配等）'],
+      ['editorHoverWidget','#363537 bg','悬停提示卡片'],
+      ['editorError.foreground','#fc618d','诊断错误前景'],
+      ['editorWarning.foreground','#fd9353','诊断警告前景'],
+      ['editorInfo.foreground','#5ad4e6','诊断信息前景'],
+      ['editorHint.foreground','#948ae3','诊断提示前景'],
+      ['editorRuler.foreground','#525053','垂直参考线'],
+      ['editorIndentGuide.background','#363537','缩进引导线'],
+      ['editorStickyScroll','#222222 bg','粘性滚动头背景']
+    ]},
+    {name:'Activity Bar & Badges', tokens:12, color:'#fce566', items:[
+      ['activityBar.background','#131313','活动栏背景（最暗）'],
+      ['activityBar.foreground','#bab6c0','活动栏图标默认颜色'],
+      ['activityBar.inactiveForeground','#525053','非活动标签图标'],
+      ['activityBar.activeFocusBorder','#fce566','活动标签焦点边框（琥珀）'],
+      ['activityErrorBadge.background','#fc618d','错误徽章背景'],
+      ['activityWarningBadge.background','#fd9353','警告徽章背景'],
+      ['activityBarBadge.background','#fce566','常规徽章背景（琥珀）'],
+      ['Activity Bar Top','#191919','顶部活动栏']
+    ]},
+    {name:'Side Bar', tokens:9, color:'#8b888f', items:[
+      ['sideBar.background','#191919','侧栏背景'],
+      ['sideBar.foreground','#8b888f','侧栏默认前景'],
+      ['sideBarSectionHeader.background','#191919','侧栏分区标题背景'],
+      ['sideBarSectionHeader.foreground','#69676c','侧栏分区标题颜色'],
+      ['sideBarTitle.foreground','#525053','侧栏标题颜色'],
+      ['sideBarStickyScroll','#191919 bg','侧栏粘性滚动']
+    ]},
+    {name:'Panel', tokens:9, color:'#fce566', items:[
+      ['panel.background','#363537','面板（终端/输出）背景'],
+      ['panelTitle.activeForeground','#fce566','活动面板标题（琥珀）'],
+      ['panelTitle.activeBorder','#fce566','活动面板标题下边框'],
+      ['panelTitle.inactiveForeground','#8b888f','非活动面板标题'],
+      ['panelStickyScroll','#363537 bg','面板粘性滚动头']
+    ]},
+    {name:'Status Bar & Items', tokens:15, color:'#222222', items:[
+      ['statusBar.background','#191919','状态栏背景'],
+      ['statusBar.foreground','#69676c','状态栏文字'],
+      ['statusBarItem.remoteBackground','#191919','远程连接标签背景'],
+      ['statusBarItem.remoteForeground','#7bd88f','远程标签颜色（绿色）'],
+      ['statusBarItem.errorBackground','#222222','错误状态背景'],
+      ['statusBarItem.errorForeground','#fc618d','错误状态前景'],
+      ['statusBarItem.warningBackground','#222222','警告状态背景'],
+      ['statusBarItem.warningForeground','#fd9353','警告状态前景'],
+      ['statusBarItem.prominentBackground','#363537','突出标签背景'],
+      ['statusBarItem.activeBackground','#222222','活动标签背景'],
+      ['statusBarItem.hoverBackground','#191919','悬停标签背景']
+    ]},
+    {name:'Tabs', tokens:19, color:'#fce566', items:[
+      ['tab.activeBackground','#222222','活动标签背景'],
+      ['tab.activeForeground','#fce566','活动标签文字（琥珀）'],
+      ['tab.activeBorder','#fce566','活动标签下边框（琥珀）'],
+      ['tab.inactiveForeground','#8b888f','非活动标签颜色'],
+      ['tab.unfocusedActiveForeground','#bab6c0','未聚焦活动标签'],
+      ['tab.hoverForeground','#f7f1ff','悬停标签文字'],
+      ['tab.border','#222222','标签分隔线'],
+      ['tab.lastPinnedBorder','#525053','最后固定标签边框']
+    ]},
+    {name:'Minimap & Scrollbar', tokens:14, color:'#fc618d', items:[
+      ['minimap.findMatchHighlight','#8b888fa5','查找匹配高亮 (65% alpha)'],
+      ['minimap.errorHighlight','#fc618da5','错误高亮'],
+      ['minimap.warningHighlight','#fd9353a5','警告高亮'],
+      ['minimapGutter.added/deleted/modified','绿/红/黄','增/删/改色块'],
+      ['scrollbarSlider.background','#bab6c026','滚动条滑块 (15%)'],
+      ['scrollbarSlider.hoverBackground','#f7f1ff26','滚动条悬停 (15%)']
+    ]},
+    {name:'Buttons, Inputs & Checkboxes', tokens:28, color:'#f7f1ff', items:[
+      ['button.background','#363537','按钮背景'],
+      ['button.hoverBackground','#525053','按钮悬停'],
+      ['input.background','#222222','输入框背景'],
+      ['input.foreground','#f7f1ff','输入框文字'],
+      ['input.border','#525053','输入框边框'],
+      ['checkbox.background','#363537','复选框背景'],
+      ['checkbox.foreground','#fce566','复选框勾选色（琥珀）'],
+      ['dropdown.background','#363537','下拉菜单背景'],
+      ['inputValidation.errorBorder','#fc618d','错误验证边框'],
+      ['inputValidation.infoBorder','#5ad4e6','信息验证边框'],
+      ['inputValidation.warningBorder','#fd9353','警告验证边框']
+    ]},
+    {name:'Debug', tokens:28, color:'#fd9353', items:[
+      ['debugToolBar.background','#363537','调试工具栏'],
+      ['debugIcon.breakpointForeground','#fc618d','断点图标（珊瑚红）'],
+      ['debugIcon.stepOverForeground','#f7f1ff','步过图标'],
+      ['debugIcon.continueForeground','#f7f1ff','继续图标'],
+      ['debugIcon.restartForeground','#7bd88f','重启图标（绿色）'],
+      ['debugIcon.stopForeground','#fc618d','停止图标'],
+      ['debugConsole.errorForeground','#fc618d','调试控制台错误'],
+      ['debugConsole.warningForeground','#fd9353','调试控制台警告'],
+      ['debugView.stateLabelBackground','#7bd88f','调试状态标签（绿色）'],
+      ['debugView.exceptionLabelBackground','#fc618d','异常标签背景']
+    ]},
+    {name:'Terminal', tokens:19, color:'#5ad4e6', items:[
+      ['terminal.background','#363537','终端背景'],
+      ['terminal.foreground','#f7f1ff','终端文字'],
+      ['terminalCursor.foreground','#f7f1ff','光标颜色'],
+      ['terminal.ansiRed → ansiBrightRed','#fc618d','Red 色系'],
+      ['terminal.ansiGreen → ansiBrightGreen','#7bd88f','Green 色系'],
+      ['terminal.ansiYellow → ansiBrightYellow','#fce566','Yellow 色系'],
+      ['terminal.ansiBlue → ansiBrightBlue','#fd9353','Blue 色系'],
+      ['terminal.ansiCyan → ansiBrightCyan','#5ad4e6','Cyan 色系'],
+      ['terminal.ansiWhite → ansiBrightWhite','#f7f1ff','White 色系'],
+      ['terminalCommandDecoration.successBackground','#7bd88f','成功装饰背景'],
+      ['terminalCommandDecoration.errorBackground','#fc618d','错误装饰背景'],
+      ['terminalCommandDecoration.defaultBackground','#f7f1ff','默认装饰']
+    ]},
+    {name:'Git & SCM', tokens:8, color:'#fce566', items:[
+      ['gitDecoration.addedResourceForeground','#7bd88f','新增资源（绿色）'],
+      ['gitDecoration.deletedResourceForeground','#fc618d','删除资源（珊瑚红）'],
+      ['gitDecoration.modifiedResourceForeground','#fce566','修改资源（琥珀）'],
+      ['gitDecoration.conflictingResourceForeground','#fd9353','冲突资源（橙色）'],
+      ['gitDecoration.stageModifiedResourceForeground','#fce566','暂存修改（琥珀）'],
+      ['scmGraph','13 种颜色','SCM 历史图色彩编码'],
+      ['scmGraph.historyItemBaseRefColor','#5ad4e6','基线引用颜色']
+    ]},
+    {name:'Diff & Merge', tokens:20, color:'#7bd88f', items:[
+      ['diffEditor.insertedLineBackground','#7bd88f19','新增行背景 (10%)'],
+      ['diffEditor.removedLineBackground','#fc618d19','删除行背景 (10%)'],
+      ['merge.currentContentBackground','#fc618d19','当前变更背景 (10%)'],
+      ['merge.incomingContentBackground','#7bd88f19','传入变更背景 (10%)'],
+      ['merge.commonContentBackground','#f7f1ff19','共同内容背景 (10%)'],
+      ['mergeEditor.conflict.unhandled...','#fc618d','未处理冲突标记'],
+      ['mergeEditor.conflict.handled...','#7bd88f','已处理冲突标记']
+    ]},
+    {name:'Notifications, Dialogs & Widgets', tokens:12, color:'#fce566', items:[
+      ['notifications.background','#363537','通知卡片背景'],
+      ['notificationCenter.background','#363537','通知中心'],
+      ['notificationToast.border','#191919','Toast 边框'],
+      ['notificationLink.foreground','#fce566','通知链接（琥珀）'],
+      ['dialog.background','#363537','对话框背景'],
+      ['pickerGroup.background','#363537','选择器分组背景'],
+      ['quickInput.background','#363537','快速输入背景'],
+      ['list.activeSelectionBackground','#525053','列表活动选中'],
+      ['list.focusBackground','#525053','列表焦点背景'],
+      ['editorSuggestWidget.selectedBackground','#525053','补全建议选中']
+    ]},
+    {name:'Walkthrough & Welcome', tokens:7, color:'#191919', items:[
+      ['welcomePage.tileBackground','#363537','欢迎页磁贴'],
+      ['welcomePage.buttonBackground','#363537','欢迎按钮'],
+      ['welcomePage.progress.foreground','#8b888f','进度条'],
+      ['walkThrough.embeddedEditorBackground','#191919','嵌入式编辑背景']
+    ]},
+    {name:'Text Semantic (Quotes, Code, Links)', tokens:7, color:'#8b888f', items:[
+      ['textBlockQuote.background','#363537','引用块背景'],
+      ['textCodeBlock.background','#222222','代码块背景'],
+      ['textLink.foreground','#fce566','链接文本（琥珀）'],
+      ['textPreformat.foreground','#fd9353','预格式化文本（橙色）'],
+      ['textSeparator.foreground','#69676c','分隔线（灰色）']
+    ]},
+    {name:'Chart Colors & Progress', tokens:9, color:'#f7f1ff', items:[
+      ['charts.red','#fc618d','图表红色'],
+      ['charts.blue','#5ad4e6','图表蓝色'],
+      ['charts.green','#7bd88f','图表绿色'],
+      ['charts.orange','#fd9353','图表橙色'],
+      ['charts.purple','#948ae3','图表紫色'],
+      ['charts.yellow','#fce566','图表黄色'],
+      ['progressBar.background','#69676c','进度条背景'],
+      ['widget.shadow','#131313','组件阴影']
+    ]}
+  ];
+
+  // ── CROSS-REF DATA ──
+  var crossData = [
+    {hex:'#fc618d', name:'Coral/Pink', syntax:'keyword, keyword.control, keyword.operator, storage, entity.name.tag, invalid, markup.deleted, editorError', ui:'activityErrorBadge.background, terminal.ansiRed/BrightRed, editorBracketHighlight.foreground1, diffEditor.removedLineBackground, merge.currentContentBackground'},
+    {hex:'#fce566', name:'Amber/Yellow', syntax:'string, markup.heading, markup.changed, constant.numeric.line-number.match, entity.name.section', ui:'activityBarBadge.background, panelTitle.activeForeground, panelTitleBadge.background, terminal.ansiYellow, checkbox.foreground, textLink.foreground'},
+    {hex:'#f7f1ff', name:'Lavender White', syntax:'source, text, constant.other, string.source, variable, variable.other, meta.object.member', ui:'editor.foreground, editorCursor.foreground, terminal.ansiWhite/BrightWhite, breadcrumb.activeSelectionForeground, notifications.foreground'},
+    {hex:'#948ae3', name:'Muted Purple', syntax:'constant, constant.numeric, constant.language, variable.annotation, meta.annotation.rust', ui:'editorHint.foreground, editorInlayHint.typeForeground, editorOverviewRuler.infoForeground, debugConsole.infoForeground, diffEditor Overview insertedForeground (diff area)'},
+    {hex:'#5ad4e6', name:'Sky Blue', syntax:'entity.name.type, entity.name.namespace, entity.name.class, storage.type, support.class', ui:'editorInfo.foreground, editorOverviewRuler.infoForeground, debugConsole.infoForeground, terminal.ansiCyan, symbolIcon.classForeground'},
+    {hex:'#7bd88f', name:'Mint Green', syntax:'entity.name.function, support.function, markup.underline.link, markup.inserted, variable.function', ui:'editorGutter.addedBackground, minimapGutter.addedBackground, terminalCommandDecoration.successBackground, merge.incomingHeaderBackground'},
+    {hex:'#fd9353', name:'Warm Orange', syntax:'variable.parameter, constant.other.placeholder, constant.other.symbol, source.sass/less/scss variable, meta.interpolation', ui:'statusBarItem.warningForeground, terminal.ansiBlue, editorOverviewRuler.modifiedForeground, editorGutter.modifiedBackground'},
+    {hex:'#8b888f', name:'Medium Gray', syntax:'punctuation, meta.brace.round/square/curly, source.sass, source.scss, entity.other.jinja2.delimiter', ui:'sideBar.foreground, breadcrumb.foreground, scrollbar.shadow, minimap.findMatchHighlight, widget.shadow, input.placeholderForeground'},
+    {hex:'#69676c', name:'Cool Gray', syntax:'comment, string.quoted.docstring, comment.punctuation.definition', ui:'editorCodeLens.foreground, editorGhostText.foreground, editorLineNumber.foreground, editorRuler.foreground, input.placeholderForeground, progressBar.background, descriptionForeground, scrollbar.shadow'}
+  ];
+
+  // ── LANG TABLE DATA ──
+  var langData = [
+    ['Rust','keyword.other.rust, storage.type.rust, storage.modifier.*.rust, entity.name.lifetime.rust, meta.annotation.rust','#fc618d (red) / #5ad4e6 (blue)','关键字默认珊瑚红，"adjust blue to red"覆盖变天蓝；lifetime 用粉红'],
+    ['CSS / SCSS / LESS','source.css variable.other, source.scss variable.scss, entity.other.attribute-name.id.css','#fd9353 (orange)','变量/标识符统一使用橙色，SASS/SCSS/LESS 同色'],
+    ['Python','variable.parameter.function.language.special.self.python, variable.parameter.function.language.special.cls.python','#bab6c0 + italic','self/cls 使用银灰斜体，与橙色参数区分'],
+    ['JavaScript/JSX','entity.name.tag.js.jsx support.class.component.js.jsx','#fc618d','JSX 标签名使用珊瑚红'],
+    ['Markdown','markup.heading, markup.bold, markup.italic, markup.underline.link, markup.quote','#fce566 / #7bd88f','标题琥珀、链接绿色、引用灰色 italic'],
+    ['Git Diff','markup.inserted, markup.deleted, markup.changed, meta.diff.git-diff.header','#7bd88f / #fc618d / #fce566','增绿、删红、改黄的 diff 语义完全由前景色承载'],
+    ['YAML','source.yaml meta.mapping.key string','#fc618d','YAML 键使用珊瑚红'],
+    ['JSON','source.json meta.mapping.key string','#f7f1ff','JSON 键使用白色（最亮）'],
+    ['HTML','entity.name.tag, punctuation.definition.tag','#fc618d / #8b888f','标签名珊瑚红，标签括号灰色'],
+    ['PHP','punctuation.section.embedded','#fd9353','PHP 代码块嵌入标点橙色'],
+    ['Ruby','variable.other.readwrite.instance/class.ruby, keyword.declaration.*.ruby','#948ae3 / #fc618d','实例变量紫色，关键字珊瑚红'],
+    ['Elm','constant.other.elm, keyword.other.parenthesis.elm','#5ad4e6 / #8b888f','常量天蓝，括号灰色'],
+    ['LaTeX','constant.other.citation.latex','#948ae3','引用紫色'],
+    ['Jinja2','entity.other.jinja2.delimiter, source.jinja2 variable.other.jinja2','#8b888f / #fd9353','分隔符灰色，变量橙色'],
+    ['Ansible','source.ansible entity.name.tag','#5ad4e6','标签天蓝'],
+    ['Vue','source.vue support.class.component','#fc618d','组件标签珊瑚红'],
+    ['SASS','source.sass variable.other, source.sass variable.sass','#fd9353 + italic','变量橙红色 italic']
+  ];
+
+  // ── RENDER FUNCTIONS ──
+  function colorTextCanvas(text, color, fontWeight) {
+    var canvas = document.createElement('canvas');
+    var ctx = canvas.getContext('2d');
+    var dpr = window.devicePixelRatio || 1;
+    var fontSize = 12;
+    var fontFam = '"Maple Mono", "JetBrains Mono", "Fira Code", monospace';
+    var font = (fontWeight||'') + ' ' + fontSize + 'px ' + fontFam;
+    ctx.font = font;
+    var tw = Math.ceil(ctx.measureText(text).width) + 4;
+    var th = Math.ceil(fontSize * 1.5);
+    canvas.width = tw * dpr;
+    canvas.height = th * dpr;
+    canvas.style.width = tw + 'px';
+    canvas.style.height = th + 'px';
+    canvas.style.display = 'inline-block';
+    canvas.style.verticalAlign = 'middle';
+    ctx.scale(dpr, dpr);
+    ctx.font = font;
+    ctx.fillStyle = color;
+    ctx.textBaseline = 'middle';
+    ctx.fillText(text, 2, th / 2);
+    return canvas;
+  }
+  function renderPaletteStrip() {
+    var strip = document.getElementById('paletteStrip');
+    var all = fgColors.concat(bgColors.map(function(b){return {hex:b.hex, rgb:b.base};}));
+
+    all.forEach(function(c){
+      var d = document.createElement('div');
+      d.style.position = 'relative';
+      var can = document.createElement('canvas');
+      can.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;';
+      var textColor = (c.hex==='#FFFFFF'||c.hex==='#f7f1ff'||c.hex==='#fce566') ? '#131313' : '#e0e0e0';
+      d.appendChild(can);
+      strip.appendChild(d);
+      requestAnimationFrame(function draw() {
+        var rect = d.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) { requestAnimationFrame(draw); return; }
+        var dpr = window.devicePixelRatio || 1;
+        can.width = rect.width * dpr;
+        can.height = rect.height * dpr;
+        var ctx = can.getContext('2d');
+        ctx.scale(dpr, dpr);
+        ctx.fillStyle = c.hex;
+        ctx.fillRect(0, 0, rect.width, rect.height);
+        ctx.fillStyle = textColor;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        var fontSize = 12;
+        var availW = rect.width - 6;
+        var fontStr;
+        do {
+          fontStr = '600 ' + fontSize + 'px "Maple Mono", "JetBrains Mono", "Fira Code", monospace';
+          ctx.font = fontStr;
+          fontSize--;
+        } while (ctx.measureText(c.hex).width > availW && fontSize >= 6);
+        ctx.font = fontStr;
+        ctx.fillText(c.hex, rect.width / 2, rect.height - 8);
+      });
+    });
+  }
+
+  function renderFgPalette() {
+    var grid = document.getElementById('fgPalette');
+    fgColors.forEach(function(c){
+      var card = document.createElement('div');
+      card.className = 'color-card';
+      card.innerHTML = '<div class="color-swatch" style="background:'+c.hex+';"></div>'+
+        '<div class="color-info">'+
+          '<div class="color-hex" style="color:'+c.cssVar+';">'+c.hex+'</div>'+
+          '<div class="color-rgb">'+c.rgb+'</div>'+
+          '<div class="color-role">'+c.role+'</div>'+
+          '<div class="color-scopes">'+c.scopes+'</div>'+
+        '</div>';
+      grid.appendChild(card);
+    });
+  }
+
+  function renderBgPalette() {
+    var grid = document.getElementById('bgPalette');
+    bgColors.forEach(function(c){
+      var chip = document.createElement('div');
+      chip.className = 'alpha-chip';
+      chip.innerHTML = '<div class="swatch" style="background:'+c.hex+';"></div>'+
+        '<span><strong>'+c.hex+'</strong> → '+c.base+' ('+c.alpha+')<br><small>'+c.use+'</small></span>';
+      grid.appendChild(chip);
+    });
+  }
+
+  function renderUiBgPalette() {
+    var grid = document.getElementById('uiBgPalette');
+    uiBgColors.forEach(function(c){
+      var chip = document.createElement('div');
+      chip.className = 'alpha-chip';
+      chip.innerHTML = '<div class="swatch" style="background:'+c.hex+';"></div>'+
+        '<span><strong>'+c.hex+'</strong> ('+c.rgb+')<br><small>'+c.use+'</small></span>';
+      grid.appendChild(chip);
+    });
+  }
+
+  function renderAlphaTable() {
+    var tbody = document.getElementById('alphaTable');
+    alphaData.forEach(function(a){
+      var tr = document.createElement('tr');
+      var td1 = document.createElement('td');
+      td1.style.fontWeight = '600';
+      td1.appendChild(colorTextCanvas(a.hex8, a.hex8));
+      var td2 = document.createElement('td');
+      td2.textContent = a.base;
+      var td3 = document.createElement('td');
+      td3.textContent = a['a'];
+      var td4 = document.createElement('td');
+      td4.textContent = a.use;
+      tr.appendChild(td1);
+      tr.appendChild(td2);
+      tr.appendChild(td3);
+      tr.appendChild(td4);
+      tbody.appendChild(tr);
+    });
+  }
+
+  function renderScopeGroups() {
+    var container = document.getElementById('scopeGroups');
+    scopeGroups.forEach(function(g, i){
+      var group = document.createElement('div');
+      group.className = 'scope-group';
+      var header = document.createElement('div');
+      header.className = 'scope-group-header';
+      header.innerHTML = '<span class="arrow">▼</span> <span style="color:'+(g.cssVar||'var(--fg)')+';font-weight:700;">'+g.name+'</span><span style="color:var(--fg4);font-size:0.85em;margin-left:auto;">'+g.fg+'</span>';
+      var body = document.createElement('div');
+      body.className = 'scope-group-body';
+      body.innerHTML = '<p style="color:var(--fg3);font-size:0.85em;margin-bottom:8px;">'+g.desc+'</p>';
+      group.appendChild(header);
+      group.appendChild(body);
+      container.appendChild(group);
+
+      header.addEventListener('click', function(){
+        body.classList.toggle('hidden');
+        header.classList.toggle('collapsed');
+      });
+    });
+  }
+
+  function renderUICategories() {
+    var container = document.getElementById('uiCategories');
+    uiCategories.forEach(function(cat){
+      var div = document.createElement('div');
+      div.className = 'ui-category';
+      var header = document.createElement('div');
+      header.className = 'ui-cat-header';
+      header.innerHTML = cat.name + ' <span style="color:var(--fg4);font-weight:400;">('+cat.tokens+' tokens)</span>';
+      var body = document.createElement('div');
+      body.className = 'ui-cat-body';
+      var table = document.createElement('table');
+      var thead = document.createElement('thead');
+      thead.innerHTML = '<tr><th>Token</th><th>Hex</th><th>用途</th></tr>';
+      table.appendChild(thead);
+      var tbody = document.createElement('tbody');
+      cat.items.forEach(function(item){
+        var tr = document.createElement('tr');
+        var td1 = document.createElement('td');
+        td1.textContent = item[0];
+        var td2 = document.createElement('td');
+        td2.style.fontWeight = '600';
+        td2.appendChild(colorTextCanvas(item[1], item[1]));
+        var td3 = document.createElement('td');
+        td3.style.fontFamily = 'sans-serif';
+        td3.textContent = item[2];
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);
+      body.appendChild(table);
+      div.appendChild(header);
+      div.appendChild(body);
+      container.appendChild(div);
+    });
+  }
+
+  function renderCrossTable() {
+    var tbody = document.getElementById('crossTable');
+    crossData.forEach(function(c){
+      var tr = document.createElement('tr');
+      var td1 = document.createElement('td');
+      td1.innerHTML = '<span style="display:inline-block;width:16px;height:16px;background:'+c.hex+';border-radius:3px;vertical-align:middle;margin-right:6px;border:1px solid rgba(255,255,255,0.15);"></span><strong>'+c.name+'</strong>';
+      var td2 = document.createElement('td');
+      td2.style.fontWeight = '700';
+      td2.appendChild(colorTextCanvas(c.hex, c.hex, '700'));
+      var td3 = document.createElement('td');
+      td3.style.fontSize = '0.8em';
+      td3.textContent = c.syntax;
+      var td4 = document.createElement('td');
+      td4.style.fontSize = '0.8em';
+      td4.textContent = c.ui;
+      var td5 = document.createElement('td');
+      td5.style.fontSize = '0.8em';
+      td5.style.color = 'var(--fg3)';
+      td5.textContent = c.hex + ' 在语法中表示 "' + c.name + '" 语义，在 UI 中表示 "' + c.name + '" 视觉元素，保持一致性';
+      tr.appendChild(td1);
+      tr.appendChild(td2);
+      tr.appendChild(td3);
+      tr.appendChild(td4);
+      tr.appendChild(td5);
+      tbody.appendChild(tr);
+    });
+  }
+
+  // ── INIT ──
+  document.addEventListener('DOMContentLoaded', function(){
+    renderPaletteStrip();
+    renderFgPalette();
+    renderBgPalette();
+    renderUiBgPalette();
+    renderAlphaTable();
+    renderScopeGroups();
+    renderLangTable();
+    renderUICategories();
+    renderCrossTable();
+  });
+})();
+</script>
+</body>
+</html>

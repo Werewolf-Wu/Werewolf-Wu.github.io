@@ -349,11 +349,11 @@ body.marp-vscode blockquote {
 <tbody>
 <tr>
 <td>源文件</td>
-<td><code>Assembly-Csharp_7.1/WorldGeneration.cs</code></td>
+<td><code>Assembly-Csharp-7.0.1/WorldGeneration.cs</code></td>
 </tr>
 <tr>
 <td>行号</td>
-<td>3725-3828</td>
+<td>3614-3718</td>
 </tr>
 <tr>
 <td>签名</td>
@@ -361,7 +361,7 @@ body.marp-vscode blockquote {
 </tr>
 <tr>
 <td>参数定义</td>
-<td><code>Assembly-Csharp_7.1/ExplosionParams.cs:1-32</code></td>
+<td><code>Assembly-Csharp-7.0.1/ExplosionParams.cs:1-32</code></td>
 </tr>
 </tbody>
 </table>
@@ -386,13 +386,13 @@ body.marp-vscode blockquote {
 </code></pre>
 <hr>
 <h2 id="2-执行流程5阶段">2. 执行流程（5阶段）</h2>
-<h3 id="阶段1音视频特效-l3727-3732">阶段1：音视频特效 (L3727-3732)</h3>
+<h3 id="阶段1音视频特效-l3616-3621">阶段1：音视频特效 (L3616-3621)</h3>
 <pre><code>Sound.Play(sound, 2D)                              // 爆炸音效
 Instantiate(&quot;Special/ExplosionParticle&quot;)             // 粒子特效
 Instantiate(&quot;Special/blastmark&quot;)                     // 地面印记（随机旋转）
 shaker.Shake(range * 20f)                           // 屏幕震动
 </code></pre>
-<h3 id="阶段2近距冲击波伤害-l3733-3743">阶段2：近距冲击波伤害 (L3733-3743)</h3>
+<h3 id="阶段2近距冲击波伤害-l3622-3632">阶段2：近距冲击波伤害 (L3622-3632)</h3>
 <p><strong>触发条件：</strong> <code>Distance(玩家, explosionCenter) &lt; range * 2.5</code></p>
 <table>
 <thead>
@@ -405,10 +405,6 @@ shaker.Shake(range * 20f)                           // 屏幕震动
 <tr>
 <td>Sound</td>
 <td>播放 <code>&quot;tinnitus&quot;</code>（耳鸣，2D，noReverb，ignoreMixer）</td>
-</tr>
-<tr>
-<td>Talker</td>
-<td>说话 <code>Locale.GetCharacter(&quot;loud&quot;)</code>（好响…）</td>
 </tr>
 <tr>
 <td><code>eyePanicTime</code></td>
@@ -431,12 +427,16 @@ shaker.Shake(range * 20f)                           // 屏幕震动
 <td>+= Random(27, 36.6)</td>
 </tr>
 <tr>
+<td>Talker</td>
+<td>说话 <code>Locale.GetCharacter(&quot;loud&quot;)</code>（好响…）</td>
+</tr>
+<tr>
 <td>Shake</td>
 <td>再次 shake(range * 20f)</td>
 </tr>
 </tbody>
 </table>
-<h3 id="阶段3collider-扫描-l3744-3773">阶段3：Collider 扫描 (L3744-3773)</h3>
+<h3 id="阶段3collider-扫描-l3633-3662">阶段3：Collider 扫描 (L3633-3662)</h3>
 <p><code>Physics2D.OverlapCircleAll(position, range)</code> → 对范围内每个 Collider：</p>
 <table>
 <thead>
@@ -464,7 +464,7 @@ shaker.Shake(range * 20f)                           // 屏幕震动
 </tr>
 </tbody>
 </table>
-<h3 id="阶段4地形破坏-l3774">阶段4：地形破坏 (L3774)</h3>
+<h3 id="阶段4地形破坏-l3663">阶段4：地形破坏 (L3663)</h3>
 <pre><code class="language-csharp">world.GenerateBlockCircle(position, (<span class="hljs-built_in">int</span>)range, block=<span class="hljs-number">0</span>, chance=<span class="hljs-number">1.0</span>, chanceEnd=<span class="hljs-number">0.85</span>,
                           autoUpdateChunk=<span class="hljs-literal">true</span>, force=<span class="hljs-literal">false</span>, ignoreInfinirock=<span class="hljs-literal">true</span>)
 </code></pre>
@@ -475,7 +475,7 @@ shaker.Shake(range * 20f)                           // 屏幕震动
 <li><strong>ignoreInfinirock = true</strong> → Infinirock (ID 14) 完全免疫</li>
 <li><strong>force = false</strong> → 只破坏 <code>worldBlock &gt; 0</code> 的方块</li>
 </ul>
-<h3 id="阶段5肢体伤害逐肢体计算l3775-3827">阶段5：肢体伤害（逐肢体计算，L3775-3827）</h3>
+<h3 id="阶段5肢体伤害逐肢体计算l3664-3717">阶段5：肢体伤害（逐肢体计算，L3664-3717）</h3>
 <p><strong>遮挡检测：</strong> 对每个 limb 先执行 <code>Physics2D.Linecast(position, limbPosition, Ground layer)</code> — 有地面格阻挡则<strong>跳过该肢体</strong>（完全免疫）</p>
 <p>通过遮挡检测后，按顺序执行：</p>
 <pre><code>[1] armorReduction = limb.GetArmorReduction()     // 护甲减伤（除法作用分母）
@@ -485,8 +485,8 @@ shaker.Shake(range * 20f)                           // 屏幕震动
 [4] body.shock = 100                                         // 满休克
 [5] body.lastTimeStepVelocity = direction * velocity          // 击退速度
 [6] body.Ragdoll()                                           // 强制倒地
-[7] if !hasShrapnel &amp;&amp; Random &lt; shrapnelChance:
-        shrapnel = 5
+[7] if (!hasShrapnel):
+        shrapnel = (Random &lt; shrapnelChance) ? 5 : 0
 [8] DamageWearables(shrapnelChance)                          // 护甲损耗
 [9] if isVital &amp;&amp; Random &lt; 0.5:
         internalBleeding += RandomInRange(muscleDamage) * 0.4 / armorReduction
@@ -527,7 +527,7 @@ shaker.Shake(range * 20f)                           // 屏幕震动
 </tr>
 <tr>
 <td><strong>CrystalUnstable</strong> (不稳定水晶)</td>
-<td>16×size</td>
+<td>16×Lerp(size,1,0.5) = 8×size+8</td>
 <td>1000×size</td>
 <td>0~30×size</td>
 <td>5秒倒计时后爆炸；bone=0.1×size, disloc=0.05×size, disfig=0.05×size, vel=20×size</td>
@@ -537,7 +537,7 @@ shaker.Shake(range * 20f)                           // 屏幕震动
 <td>3</td>
 <td>200</td>
 <td>8~10</td>
-<td>极小范围；bleed=0~2, shrapnel=0, skin=7~10, skinChance=0.5, disfig=0, bone=0, disloc=0</td>
+<td>极小范围；bleed=0~2, shrapnel=0, skin=7~10, skinChance=0.5, disfig=0, bone=0, disloc=0, vel=30, bleedChance=0.1</td>
 </tr>
 <tr>
 <td><strong>TurretScript</strong> (炮塔自毁)</td>
@@ -565,7 +565,7 @@ shaker.Shake(range * 20f)                           // 屏幕震动
 <td>可调(默认12)</td>
 <td>可调(默认500)</td>
 <td>可调(默认0~60)</td>
-<td>所有15参数均可覆盖</td>
+<td>所有14参数均可覆盖（position + 13可选）</td>
 </tr>
 </tbody>
 </table>
@@ -840,7 +840,7 @@ shaker.Shake(range * 20f)                           // 屏幕震动
 <hr>
 <h2 id="5-关键推论">5. 关键推论</h2>
 <ol>
-<li><strong>遮挡检测是唯一的减伤手段</strong>：有地面格在爆炸中心与肢体之间的 Linecast 通过 → 该肢体完全无伤；否则接受全部伤害。</li>
+<li><strong>遮挡检测是唯一的完全减伤手段</strong>：有地面格在爆炸中心与肢体之间的 Linecast 通过 → 该肢体完全无伤；否则接受全部伤害。</li>
 <li><strong>护甲为除法减伤</strong>：所有伤害公式为 <code>/ armorReduction</code>，高护甲可以大幅降低骨折/脱臼/毁容概率。</li>
 <li><strong>肌肉伤害必中</strong>：只要通过遮挡检测，<code>muscleHealth</code> 必然受损。</li>
 <li><strong>头部是致命弱点</strong>：头部 limb 在爆炸中必然 <code>consciousness=0</code>，且有较高概率脑损伤、毁容、失明。</li>

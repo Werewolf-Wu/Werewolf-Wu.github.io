@@ -63,6 +63,7 @@ html[data-theme="dark"] {
 
 html {
   min-width: 320px;
+  padding: 0;
   background: var(--page-bg);
   scroll-behavior: smooth;
 }
@@ -70,6 +71,7 @@ html {
 body.reader-page {
   min-width: 320px;
   margin: 0;
+  padding: 0;
   overflow-x: hidden;
   background:
     radial-gradient(circle at 8% 0%, var(--page-glow), transparent 32rem),

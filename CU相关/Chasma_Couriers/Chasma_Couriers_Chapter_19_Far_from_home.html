@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta name="description" content="Chasma Couriers — Chapter 19: Far from home">
+            <title>Chasma Couriers</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+/* From extension bierner.markdown-checkbox */
+.contains-task-list {
+    padding-left: 0;
+}
+
+.contains-task-list li {
+    margin-left: 24px;
+}
+
+.contains-task-list .task-list-item {
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.contains-task-list .contains-task-list {
+    padding-left: 20px;
+}
+/* From extension goessner.mdmath */
+@font-face{font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url(fonts/KaTeX_AMS-Regular.woff2) format("woff2"),url(fonts/KaTeX_AMS-Regular.woff) format("woff"),url(fonts/KaTeX_AMS-Regular.ttf) format("truetype")}@font-face{font-family:KaTeX_Caligraphic;font-style:normal;font-weight:700;src:url(fonts/KaTeX_Caligraphic-Bold.woff2) format("woff2"),url(fonts/KaTeX_Caligraphic-Bold.woff) format("woff"),url(fonts/KaTeX_Caligraphic-Bold.ttf) format("truetype")}@font-face{font-family:KaTeX_Caligraphic;font-style:normal;font-weight:400;src:url(fonts/KaTeX_Caligraphic-Regular.woff2) format("woff2"),url(fonts/KaTeX_Caligraphic-Regular.woff) format("woff"),url(fonts/KaTeX_Caligraphic-Regular.ttf) format("truetype")}@font-face{font-family:KaTeX_Fraktur;font-style:normal;font-weight:700;src:url(fonts/KaTeX_Fraktur-Bold.woff2) format("woff2"),url(fonts/KaTeX_Fraktur-Bold.woff) format("woff"),url(fonts/KaTeX_Fraktur-Bold.ttf) format("truetype")}@font-face{font-family:KaTeX_Fraktur;font-style:normal;font-weight:400;src:url(fonts/KaTeX_Fraktur-Regular.woff2) format("woff2"),url(fonts/KaTeX_Fraktur-Regular.woff) format("woff"),url(fonts/KaTeX_Fraktur-Regular.ttf) format("truetype")}@font-face{font-family:KaTeX_Main;font-style:normal;font-weight:700;src:url(fonts/KaTeX_Main-Bold.woff2) format("woff2"),url(fonts/KaTeX_Main-Bold.woff) format("woff"),url(fonts/KaTeX_Main-Bold.ttf) format("truetype")}@font-face{font-family:KaTeX_Main;font-style:italic;font-weight:700;src:url(fonts/KaTeX_Main-BoldItalic.woff2) format("woff2"),url(fonts/KaTeX_Main-BoldItalic.woff) format("woff"),url(fonts/KaTeX_Main-BoldItalic.ttf) format("truetype")}@font-face{font-family:KaTeX_Main;font-style:italic;font-weight:400;src:url(fonts/KaTeX_Main-Italic.woff2) format("woff2"),url(fonts/KaTeX_Main-Italic.woff) format("woff"),url(fonts/KaTeX_Main-Italic.ttf) format("truetype")}@font-face{font-family:KaTeX_Main;font-style:normal;font-weight:400;src:url(fonts/KaTeX_Main-Regular.woff2) format("woff2"),url(fonts/KaTeX_Main-Regular.woff) format("woff"),url(fonts/KaTeX_Main-Regular.ttf) format("truetype")}@font-face{font-family:KaTeX_Math;font-style:italic;font-weight:700;src:url(fonts/KaTeX_Math-BoldItalic.woff2) format("woff2"),url(fonts/KaTeX_Math-BoldItalic.woff) format("woff"),url(fonts/KaTeX_Math-BoldItalic.ttf) format("truetype")}@font-face{font-family:KaTeX_Math;font-style:italic;font-weight:400;src:url(fonts/KaTeX_Math-Italic.woff2) format("woff2"),url(fonts/KaTeX_Math-Italic.woff) format("woff"),url(fonts/KaTeX_Math-Italic.ttf) format("truetype")}@font-face{font-family:"KaTeX_SansSerif";font-style:normal;font-weight:700;src:url(fonts/KaTeX_SansSerif-Bold.woff2) format("woff2"),url(fonts/KaTeX_SansSerif-Bold.woff) format("woff"),url(fonts/KaTeX_SansSerif-Bold.ttf) format("truetype")}@font-face{font-family:"KaTeX_SansSerif";font-style:italic;font-weight:400;src:url(fonts/KaTeX_SansSerif-Italic.woff2) format("woff2"),url(fonts/KaTeX_SansSerif-Italic.woff) format("woff"),url(fonts/KaTeX_SansSerif-Italic.ttf) format("truetype")}@font-face{font-family:"KaTeX_SansSerif";font-style:normal;font-weight:400;src:url(fonts/KaTeX_SansSerif-Regular.woff2) format("woff2"),url(fonts/KaTeX_SansSerif-Regular.woff) format("woff"),url(fonts/KaTeX_SansSerif-Regular.ttf) format("truetype")}@font-face{font-family:KaTeX_Script;font-style:normal;font-weight:400;src:url(fonts/KaTeX_Script-Regular.woff2) format("woff2"),url(fonts/KaTeX_Script-Regular.woff) format("woff"),url(fonts/KaTeX_Script-Regular.ttf) format("truetype")}@font-face{font-family:KaTeX_Size1;font-style:normal;font-weight:400;src:url(fonts/KaTeX_Size1-Regular.woff2) format("woff2"),url(fonts/KaTeX_Size1-Regular.woff) format("woff"),url(fonts/KaTeX_Size1-Regular.ttf) format("truetype")}@font-face{font-family:KaTeX_Size2;font-style:normal;font-weight:400;src:url(fonts/KaTeX_Size2-Regular.woff2) format("woff2"),url(fonts/KaTeX_Size2-Regular.woff) format("woff"),url(fonts/KaTeX_Size2-Regular.ttf) format("truetype")}@font-face{font-family:KaTeX_Size3;font-style:normal;font-weight:400;src:url(fonts/KaTeX_Size3-Regular.woff2) format("woff2"),url(fonts/KaTeX_Size3-Regular.woff) format("woff"),url(fonts/KaTeX_Size3-Regular.ttf) format("truetype")}@font-face{font-family:KaTeX_Size4;font-style:normal;font-weight:400;src:url(fonts/KaTeX_Size4-Regular.woff2) format("woff2"),url(fonts/KaTeX_Size4-Regular.woff) format("woff"),url(fonts/KaTeX_Size4-Regular.ttf) format("truetype")}@font-face{font-family:KaTeX_Typewriter;font-style:normal;font-weight:400;src:url(fonts/KaTeX_Typewriter-Regular.woff2) format("woff2"),url(fonts/KaTeX_Typewriter-Regular.woff) format("woff"),url(fonts/KaTeX_Typewriter-Regular.ttf) format("truetype")}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important;border-color:currentColor}.katex .katex-version:after{content:"0.13.11"}.katex .katex-mathml{clip:rect(1px,1px,1px,1px);border:0;height:1px;overflow:hidden;padding:0;position:absolute;width:1px}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-style:italic;font-weight:700}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{border-collapse:collapse;display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;position:relative;vertical-align:bottom}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;font-size:1px;min-width:2px;vertical-align:bottom;width:2px}.katex .vbox{-webkit-box-orient:vertical;-webkit-box-direction:normal;-webkit-box-align:baseline;align-items:baseline;display:-webkit-inline-box;display:inline-flex;flex-direction:column}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{-webkit-box-orient:horizontal;-webkit-box-direction:normal;display:-webkit-inline-box;display:inline-flex;flex-direction:row}.katex .thinbox{max-width:0;width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .clap,.katex .llap,.katex .rlap{position:relative;width:0}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{border:0 solid;display:inline-block;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline{border-bottom-style:dashed;display:inline-block;width:100%}.katex .sqrt>.root{margin-left:.27777778em;margin-right:-.55555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.83333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.16666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.33333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.66666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.45666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.14666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.71428571em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.85714286em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.14285714em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.28571429em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.42857143em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.71428571em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.05714286em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.46857143em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.96285714em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.55428571em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.55555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.66666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.77777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.88888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.11111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.33333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.30444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.76444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.41666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.58333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.66666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.83333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.72833333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.07333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.34722222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.41666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.48611111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.55555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.69444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.83333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.44027778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.72777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.28935185em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.34722222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.40509259em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.46296296em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.52083333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.69444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.83333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.20023148em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.43981481em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.24108004em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.28929605em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.33751205em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.38572806em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.43394407em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.48216008em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.57859209em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.69431051em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.83317261em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.19961427em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.20096463em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.24115756em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.28135048em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.32154341em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.36173633em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.40192926em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.48231511em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.57877814em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.69453376em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.83360129em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{fill:currentColor;stroke:currentColor;fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;display:block;height:inherit;position:absolute;width:100%}.katex svg path{stroke:none}.katex img{border-style:none;max-height:none;max-width:none;min-height:0;min-width:0}.katex .stretchy{display:block;overflow:hidden;position:relative;width:100%}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{overflow:hidden;position:relative;width:100%}.katex .halfarrow-left{left:0;overflow:hidden;position:absolute;width:50.2%}.katex .halfarrow-right{overflow:hidden;position:absolute;right:0;width:50.2%}.katex .brace-left{left:0;overflow:hidden;position:absolute;width:25.1%}.katex .brace-center{left:25%;overflow:hidden;position:absolute;width:50%}.katex .brace-right{overflow:hidden;position:absolute;right:0;width:25.1%}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{border:.04em solid;box-sizing:border-box}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{border-right:.049em solid;border-top:.049em solid;box-sizing:border-content;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{content:"(" counter(katexEqnNo) ")";counter-increment:katexEqnNo}.katex .mml-eqn-num:before{content:"(" counter(mmlEqnNo) ")";counter-increment:mmlEqnNo}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:-webkit-calc(50% + .3em);right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;left:-webkit-calc(50% + .3em);left:calc(50% + .3em);position:absolute;text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{padding-left:2em;text-align:left}body{counter-reset:katexEqnNo mmlEqnNo}
+
+/* style for html inside of browsers */
+.katex { font-size: 1em !important; } /* align KaTeX font-size to surrounding text */
+
+eq { display: inline-block; }
+eqn { display: block}
+section.eqno {
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+    align-items: center;
+}
+section.eqno > eqn {
+    width: 100%;
+    margin-left: 3em;
+}
+section.eqno > span {
+    width:3em;
+    text-align:right;
+}
+
+p {
+    text-align: justify;
+    hyphens: auto;
+}
+
+table {
+    display: table;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1em;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+}
+
+figure {
+    margin: 0.5em auto;
+}
+figure > img {
+    display: block;
+    margin: 0 auto;
+    page-break-inside: avoid;
+    text-align: center;
+}
+figcaption {
+    font-size: 0.9em;
+    margin-top: 0.5em;
+    text-align: center;
+}
+
+aside {
+  font-size: 0.9em;
+  max-width: 300px;
+  padding: 0 0 0 1em;
+  margin: 0 0 0 1em;
+  float: right;
+}
+
+aside > *:first-child {
+  margin-top: 0;
+}
+aside > *:last-child {
+  margin-bottom: 0;
+}
+
+/* From extension marp-team.marp-vscode */
+#__marp-vscode {
+  all: revert;
+}
+
+/* Override VS Code default CSS rules reverting to initial
+   https://github.com/microsoft/vscode/blob/master/src/vs/workbench/contrib/webview/browser/pre/main.js#L53 */
+html:has(body.marp-vscode) {
+  padding: 0;
+}
+
+body.marp-vscode {
+  padding: 0;
+}
+
+body.marp-vscode img {
+  max-width: unset;
+  max-height: unset;
+}
+
+body.marp-vscode a,
+body.marp-vscode a:hover,
+body.marp-vscode code {
+  color: unset;
+}
+
+body.marp-vscode blockquote {
+  background: unset;
+  border-color: unset;
+}
+
+body.marp-vscode .code-block-copy-button {
+  display: none !important;
+}
+
+@media screen {
+  body.marp-vscode {
+    overflow-y: scroll;
+
+    /* stylelint-disable-next-line selector-class-pattern */
+    &.showEditorSelection {
+      --marp-vscode-highlight-color: rgb(255 255 255 / 40%);
+
+      &.vscode-light {
+        --marp-vscode-highlight-color: rgb(0 0 0 / 15%);
+      }
+
+      &.vscode-high-contrast {
+        --marp-vscode-highlight-color: rgb(255 160 0 / 70%);
+      }
+    }
+  }
+
+  #__marp-vscode [data-marp-vscode-slide-wrapper] {
+    margin: 20px;
+    position: relative;
+
+    &.code-active-line,
+    &:has(.code-active-line) {
+      &::before {
+        position: absolute;
+        content: '';
+        inset: -7px;
+        border: 3px solid var(--marp-vscode-highlight-color, transparent);
+        pointer-events: none;
+      }
+    }
+  }
+
+  #__marp-vscode svg[data-marpit-svg] {
+    box-shadow: 0 5px 10px rgb(0 0 0 / 25%);
+    display: block;
+    margin: 0;
+  }
+
+  /* Based on https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+  #code-csp-warning {
+    background-color: #444;
+    box-shadow: 1px 1px 1px rgb(0 0 0 / 25%);
+    color: white;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-size: 12px;
+    line-height: 22px;
+    margin: 16px;
+    padding: 6px;
+    position: fixed;
+    right: 0;
+    text-align: center;
+    top: 0;
+    overflow-wrap: break-word;
+  }
+
+  #code-csp-warning:hover {
+    text-decoration: none;
+    background-color: #007acc;
+    box-shadow: 2px 2px 2px rgb(0 0 0 / 25%);
+  }
+}
+
+@media print {
+  body.marp-vscode #code-csp-warning {
+    display: none;
+  }
+}
+
+</style>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+
+        <link rel="stylesheet" href="chasma-couriers.css">
+        <script src="chasma-couriers.js" defer></script>
+        </head>
+        <body class="vscode-body vscode-light reader-page">
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<h1 id="chasma-couriers">Chasma Couriers</h1>
+<h2 id="mahlzeit">Mahlzeit</h2>
+<h3 id="chapter-19-far-from-home">Chapter 19: Far from home</h3>
+<div class="source-note" role="note">
+  <p><strong>原作者：</strong>Mahlzeit，原载于 <a href="https://archiveofourown.org/works/84068451/navigate" rel="noopener noreferrer">AO3</a>。</p>
+  <p>转载声明：本页面仅为方便中国读者阅读，作品版权归原作者所有。</p>
+</div>
+<p>The speakers keep crackling. Voices mulched together, half a dozen bastards arguing over who gets to kill me first.</p>
+<p>I bury my head in my hands.</p>
+<p>Never in my life have I wanted anything more than to disappear. To fly Calyx into a black hole and fold in on myself.</p>
+<p>Precise coordinates. Don't even want to pull up the nav display to confirm them, because there's no universe where Solen got them wrong. Right now, every pirate in range is keying those numbers into their navigator. First come, first served. No consolation prize for second place.</p>
+<p>How could I be so stupid?</p>
+<p>I thought I had all the cards. Thought I was so clever. But look at what I'm actually up against. A company with more money and resources than most militaries. A company that created an entire species just to use them as tools. And I honestly believed we could outsmart that. That we could run. I made Ollie believe we had a chance.</p>
+<p>I'm nothing but an afterthought to them. Expendable.</p>
+<p>But the worst part? I kept Solen on the line. I kept asking him questions to try and prove Ollie wrong. I let him trace our exact location, just to convince Ollie that his friend was dead.</p>
+<p>It's all my fault.</p>
+<p>&quot;Hey, asshole.&quot;</p>
+<p>I flinch. Even the swearing—I couldn't even fix that. &quot;What did I say about that word?&quot;</p>
+<p>&quot;We aren't going to get a chance to borrow fur again…&quot;</p>
+<p>I look up. Ollie's eyes are lit red by the nebula.</p>
+<p>&quot;…unless you focus. <em>Now.</em>&quot;</p>
+<p>He's using my own threat against me. And god help me, it almost works. &quot;How… how are you so calm? After hearing that?&quot;</p>
+<p>&quot;I've never been more scared.&quot; Ollie crosses his arms, and the faintest tremor passes through his muzzle. &quot;But I'm ready to fight. I won't let them kill you.&quot;</p>
+<p>I'm too shocked to even laugh. He's more scared for me than himself. Where has the meek, whimpering Ollie from Kiren gone? The one who cowered in a closet at the sound of a raised voice?</p>
+<p>When did I become him?</p>
+<p>The answer's obvious. Ollie's in his element. A life-or-death space fight is exactly what the company drilled into his brain.</p>
+<p>Or maybe it's simpler than that. Maybe it's because he has someone worth fighting for. Two someones. And if I'm to die today, on my own damned ship, I don't want Ollie's last memory of me to be of a hopeless courier way out of his depth.</p>
+<p>&quot;Let's do this, then.&quot; I wipe my eyes with the back of my hand. &quot;With the amount of bad luck we've had, cosmic karma's overdue to throw us a bone.&quot;</p>
+<p>&quot;Can't you just talk normally for once?&quot;</p>
+<p>&quot;Being scared turns you into a real brat, you know?&quot; I swipe the main monitor across to the radar screen. &quot;Clean. No contacts. But based on our speed—&quot;</p>
+<p>&quot;Radar range, our speed on one engine, the likely speed of cruiser-class ships…&quot; Ollie's bandaged paw taps the console edge, running the maths. &quot;From first sighting to contact, three minutes at most. If one's coming at us head-on, it'll be less.&quot;</p>
+<p>Three minutes. I flex my fingers around the joystick. &quot;We're not outrunning anything on one engine. And I don't fancy our chances in a dogfight. So… any better ideas?&quot;</p>
+<p>&quot;Tell them to go away.&quot;</p>
+<p>I stare at him.</p>
+<p>&quot;Every pirate you scare off is one less variable to worry about.&quot;</p>
+<p>Honestly? Not the worst idea right now. I've spent days listening to this stupid channel—days of drunk arguments and static. I know how these people talk. And I know what scares them.</p>
+<p>Time to finally speak up. I thumb the transmit key.</p>
+<p>&quot;Hi, all. Calyx here.&quot;</p>
+<p>The overlapping voices cut out. Half the sector was mid-sentence arguing over my corpse, and now there's nothing but the hiss of the channel.</p>
+<p>&quot;Word of warning, since you're all so keen. The company contracted me to bring this package back to them in the first place. And it turns out they're in the habit of stiffing you on delivery.&quot;</p>
+<p>Silence still. Suppose they aren't so used to their prey talking back.</p>
+<p>&quot;Original contract price was three hundred grand. Some miracle tech, apparently. I suppose them tearing up the deal and offering seventy-five is a cost-cutting measure. Can't promise the same won't happen to you.&quot;</p>
+<p>&quot;<em>And he ain't bullshitting!</em>&quot;</p>
+<p>A familiar nicotine rasp through the speakers. The closest thing I have to a friend on this channel: Myra</p>
+<p>&quot;<em>Tell 'em 'bout that fireworks show I helped string up,</em>&quot; she says.</p>
+<p>What is she talking about? Unless—</p>
+<p>&quot;Contact!&quot; Ollie's paw lashes out at the radar. &quot;One-seven-zero degrees.&quot;</p>
+<p>A blip, almost dead astern. No transponder.</p>
+<p>One last shot. Myra's passed me the ammo. I press the transmit key down hard.</p>
+<p>&quot;Not about to let the company have the last laugh. We've rigged this ship to blow at the push of a button. My finger's on it right now. If there's no way out, I'll make damn sure no one gets a payday.&quot;</p>
+<p>&quot;<em>Won't be as big as the lightshow I gave those corpo fucks back at Torren,</em>&quot; says Myra, &quot;<em>but it'll do the job.</em>&quot;</p>
+<p>I key off. My hand is steady. Funny that.</p>
+<p>&quot;Activity on the near-field transmission.&quot; Ollie points to the glowing icon on the comms panel.</p>
+<p>Suppose our inbound friend has something to say. I leave the pirate channel sitting in silence and switch to the near-range frequency. The speakers pop.</p>
+<p>&quot;<em>You and that whore are shit liars.</em>&quot;</p>
+<p>Yeah, I'm starting to realise that about myself.</p>
+<p>&quot;<em>No way a Kestrel Ten's being paid three hundred big ones. Ain't nothing your ship can do compared to any other schmuck's.</em>&quot;</p>
+<p>Another familiar voice. The one with the drawl that was bickering over the radio with Myra, way back near Harlow. Logan, I think his name was. &quot;Listen—&quot;</p>
+<p>&quot;<em>No—you listen, lad. Company don't care if you live or die, but I like the path of least resistance. All you got to do is hand it over, and those pricks will forget you exist tomorrow.</em>&quot;</p>
+<p>&quot;Do you even know what they're paying you to grab?&quot; My voice cracks upward. &quot;A living creature. A person. Just so those fucks can strap him down and torture him some more. And you're fine with that?&quot;</p>
+<p>A pause. The nebula pulses violet beyond the viewport. Ollie's eyes are closed for a brief second, and I swear his muzzle moves in a silent <em>thank you.</em></p>
+<p>A pop from the speakers. <em>&quot;Lad,&quot;</em> Logan says, <em>&quot;I've got seventy-five thousand reasons to be fine with that.&quot;</em></p>
+<p>&quot;Another incoming contact!&quot; Ollie's claw jabs at the radar. &quot;Ninety degrees.&quot;</p>
+<p>A second dot on the scope, starboard side, bearing down fast. Three minutes out. We'll be fighting on two fronts, with who knows how many stragglers burning hard behind them. One pirate, maybe I could take. A surprise laser in the right place and it's done. But two pirates? Three? Ten?</p>
+<p>Ollie said it himself. Eventually, the bone trees stop growing.</p>
+<p><em>How do you win a fight against a superior ship? Be unpredictable.</em></p>
+<p>Blue light washes through the cockpit.</p>
+<p>&quot;Ollie.&quot;</p>
+<p>&quot;Yeah?&quot;</p>
+<p>&quot;I think you know what I'm about to say.&quot;</p>
+<p>His eyes drift to the viewport. &quot;Um… let's fly into the nebula?&quot;</p>
+<p>&quot;Let's fly into the nebula.&quot;</p>
+<p>A fork of lightning splits the clouds, branching as it vanishes into the blue haze.</p>
+<p>&quot;Are you asking me whether we should do it?&quot;</p>
+<p>&quot;No. I'm telling you.&quot;</p>
+<p>Ollie slams his paw onto the console. &quot;Then shut up and do it already!&quot;</p>
+<p>That's all the encouragement I need. I twist the joystick hard left and Calyx groans around the turn, her nose swinging toward the wall of superheated colour.</p>
+<p>Ollie's bandaged paw swats at the radar. &quot;One minute until contact.&quot;</p>
+<p>&quot;<em>You out of your friggen mind?</em>&quot; Logan's drawl has been stripped clean. Now he just sounds incredulous. &quot;<em>You and whatever you're trying to protect will be cooked alive!</em>&quot;</p>
+<p>&quot;Then I guess we'll see you in hell.&quot;</p>
+<p>&quot;<em>Use your head, lad! Let's make a deal—you and me.</em>&quot;</p>
+<p>&quot;Thirty seconds!&quot; Ollie's gripping the armrest with both paws now, his tail whapping against the console.</p>
+<p>The nebula rushes toward us. What had been a distant wall of light now fills the viewport entirely—a churning mass of luminescent gas that pulses from crimson to blinding white and every colour of the rainbow along the way.</p>
+<p>By the time we contact, it's back to a violent red.</p>
+<p>The viewport floods scarlet, and for a brief, terrifying second I can't see anything. Just blood. Everywhere.</p>
+<p>Then the colour breaks apart, and we're inside.</p>
+<p>Logan's voice fractures, static swallowing sound. &quot;<em>—don't do th—</em>&quot;</p>
+<p>The radar suffers a similar fate. Where there had been two clean dots in the empty black, there are now hundreds of phantom contacts blooming across the sweep. Each ping reshuffles their positions like a digital snowglobe.</p>
+<p>&quot;Electromagnetic interference.&quot; Ollie's voice cuts through.</p>
+<p>It's like flying into a fission reactor. Instruments aren't built to measure anything in an environment with this much electrical charge. We're blind. But so are they.</p>
+<p>Then the silence hits me. There's just the lonely sputter of one overworked engine and the faintest crackle from the speakers. We've flown into a superheated electrical storm, and it's the quietest this ship's ever been.</p>
+<p>No one teaches you how to fly in a nebula, for the same reason nobody teaches you how to ram your ship into the reinforced exterior of a space station. The stupidity is self-evident. There's no black out there any more. Just colour stacked on colour, no depth to it. Clouds that look close enough to brush the hull are tens of kilometres off, while others roll out of nowhere and swallow the viewport whole. I can't tell how deep we are. I can't tell which way is out.</p>
+<p>All I can do is keep flying forward. If I turn back, who knows how many pirates are waiting at the edge of the nebula.</p>
+<p>&quot;The centre of those clouds, where the colour's densest…&quot; I nod at a river of pink churning past to starboard, so bright it hurts to look at, &quot;…hot enough to melt metal. But if we stick to the edges—&quot;</p>
+<p>&quot;What about the zapping?&quot;</p>
+<p>&quot;Not much we—&quot;</p>
+<p>White.</p>
+<p>The flash and the bang arrive together. The hull shudders and a barrage of damage alerts flood the status screen. I scream as my ankle lights up—molten lead poured into the joint, sloshing around the bone.</p>
+<p>Ollie's already swiping through the reports. &quot;Hull got a little peeled. Nothing critical.&quot;</p>
+<p>My heart hammers in my ears. I need what little processing power exists beyond the pain to thread Calyx through this kaleidoscope from hell. And based on the stream of alerts, Calyx is in as much pain as me. Please, girl, I beg you: don't break as easily as my ankle.</p>
+<p>A glow builds across the viewport, separate from the churning colours—a flickering blue, crawling over the glass like luminescent spiderwebs. Static charge. Billions of gaseous particles ramming the hull.</p>
+<p>It's pretty. The way a lit fuse is pretty.</p>
+<p>Another jolt. Massive. No lightning this time. A lurch that would throw me against the wall if I wasn't buckled in. I scream again as Ollie tumbles off his feet onto all fours. The status screen explodes. Last time I saw so many warnings stacked on top of each other, a rocket had taken out half our forward thrust.</p>
+<p>&quot;That didn't feel good.&quot; Either my vision's blurred or the clouds are bleeding together. &quot;Did something explode?&quot;</p>
+<p>Ollie claws his way up and starts swiping through the alerts.</p>
+<p>The controls are wrong. Calyx is drifting hard, and every nudge of the joystick lands seconds late, like she's thinking it over. The throttles barely change our speed.</p>
+<p>Ollie stops partway down the alerts. His paw hovers over the screen. His claws flex in and out. &quot;Lateral imbalance?&quot;</p>
+<p>&quot;That's it?&quot; That's the warning you get when some idiot stacks the hold unevenly. &quot;Crates must have come loose, shifted—&quot;</p>
+<p>&quot;Starboard is thirty tonnes heavier than portside.&quot;</p>
+<p>Thirty tonnes? That's heavier than Calyx herself. &quot;That can't be right.&quot;</p>
+<p>Ollie blinks rapidly at the screen. I've never seen this before; Ollie, confused by a fault?</p>
+<p>That's not a good sign. I start listing the only things I can think of. &quot;What's left of the portside engine got liquified? Nebula screwing with the sensors?&quot;</p>
+<p>He shakes his head. &quot;Portside still reads the same. It's starboard that's thirty tonnes heavier than it should be.&quot;</p>
+<p>Starboard. All I can think of is the starboard monitor, that camera feed with the flicker that Ollie fixed what feels like years ago. I reach over and turn it on.</p>
+<p>The screen takes its time waking up. The image quality is about what you'd get streaming video over station wi-fi, blocks and smears. Nebula's to blame.</p>
+<p>But what finally fills the frame doesn't make sense. Red metal. Where Calyx's flank and our blue engine wash should be, there's just red metal.</p>
+<p>&quot;What the hell?&quot;</p>
+<p>Ollie looks over. His whole body goes stiff.</p>
+<p>&quot;Tell me what I'm looking at.&quot;</p>
+<p>&quot;Um… let me check something.&quot;</p>
+<p>He launches off the console with a kick, dashing into the cabin on all fours. I force my eyes back to the nebula, wiping the tears from my eyes and the snot from my nose. With the controls lagging, timing is everything—start every turn a second before you need it. Behind me is the heavy <em>clunk</em> of the cargo hold door being wrestled open, the one that sticks if you don't lift it on the rail.</p>
+<p>Calyx's asymmetry is so much worse now. Whatever's on our starboard side is dragging us further portside with every passing second. I'm shoving the joystick to its limit just to hold a straight line. Tilting even a degree to the right is impossible.</p>
+<p>Ollie scrambles back into the cockpit, catching himself on the centre console. &quot;So, um&quot;—his chest heaves—&quot;we might have a problem.&quot;</p>
+<p>&quot;You don't say.&quot;</p>
+<p>&quot;One of the pirate ships might have… latched onto our hull.&quot;</p>
+<p>I stare at him.</p>
+<p>&quot;And extended a boarding tunnel.&quot;</p>
+<p>I keep staring.</p>
+<p>&quot;And is currently cutting into the cargo hold.&quot;</p>
+<p>I'd laugh if I wasn't in so much pain. Two laser turrets on this ship, and they can only shoot what I can see. Can't aim at what's bolted to our hull like a parasitic twin.</p>
+<p>&quot;How'd they find us? In all this?&quot;</p>
+<p>&quot;I don't know but I'm kinda impressed.&quot; Ollie picks at his bandage. &quot;Might have followed our engine bleed—the one stable colour. But to angle themselves just right—&quot;</p>
+<p>&quot;And how long until they break in?&quot;</p>
+<p>&quot;Five minutes. Less if they work quickly.&quot;</p>
+<p>Another flash. A violent rattle as lightning forks across the hull, close enough that the blue webs on the glass flare white. The pain in my leg is unbearable. I can't think. I can barely see through the tears. My whole body is crying out for one thing.</p>
+<p>&quot;Fent.&quot;</p>
+<p>&quot;W-what?&quot;</p>
+<p>&quot;Need to focus. I need fent.&quot;</p>
+<p>&quot;But withdrawal will—&quot;</p>
+<p>&quot;Fuck, Ollie—we'll worry about that when we're not about to die.&quot;</p>
+<p>&quot;R-right, give me a second.&quot; He bolts back into the cabin.</p>
+<p>I don't dare look behind me. The nebula demands every shred of attention I have left. A pocket of gas materialises ahead, amber at the edges, its core flaring white. I push the joystick forward to dive beneath it. The response comes three agonising seconds late, the nose dipping just enough to clear the worst of it. The temperature reading on the console—one of the few instruments still working—spikes to red.</p>
+<p>I punch the transmit key and shout into the near-field. &quot;Are you out of your mind? You'll kill us both!&quot;</p>
+<p>Incredibly, there's a response. Our ships are close enough to touch, and his voice punches through the interference in chewed-up pieces. <em>&quot;Gave you—chance, lad. Now let's see—press that button.&quot;</em></p>
+<p>Logan. So much for the path of least resistance.</p>
+<p>The patter of paws on metal. Ollie skids back into the cockpit and nearly goes over as I duck the Calyx under a cloud of teal. He holds an ampule up to the viewport, using the nebula light to read the measurement as he draws.</p>
+<p>&quot;Not too much,&quot; I say. &quot;Need to be alert.&quot;</p>
+<p>&quot;I know, I know.&quot; He withdraws the needle. It's shaking in his paw. He holds the ampule—still nearly full—in front of my face. &quot;Could you hold this while I inject?&quot;</p>
+<p>I glance between him and my hands, jerking my chin down at them. One on the throttles, one white-knuckled around the joystick—both very much occupied.</p>
+<p>&quot;Oh, right.&quot; He stuffs the ampule into my pants pocket. &quot;Just keep that hand clenched. I need to find a vein.&quot;</p>
+<p>&quot;Christ. Can't you just jab it somewhere?&quot;</p>
+<p>&quot;Oh—I can.&quot;</p>
+<p>He jabs it into the back of my neck. The scream that comes out of me is ten percent pain, ninety percent abject horror. &quot;Why <em>there!?</em>&quot;</p>
+<p>&quot;Faster circulation, trust me.&quot;</p>
+<p>&quot;Damn well better be!&quot; I hiss through my teeth as he withdraws the needle. The puncture site burns cold. &quot;We've got less than five minutes until the fight of our lives.&quot;</p>
+<p>&quot;Can't you just…&quot; Ollie grabs the console as we lurch. &quot;Aim their ship through the dense part of the nebula? Cook them off?&quot; He shakes his head before I can answer. &quot;No, that—&quot;</p>
+<p>&quot;—that would kill us too.&quot; I correct course around a slow-rolling column of magenta. &quot;We're welded together. They've cut into our hold. We share a vacuum.&quot;</p>
+<p>Their hull breaches, ours breaches. Like conjoined twins sharing the same lungs.</p>
+<p>But something else is wrong—Calyx is barely slowing any more, no matter how far I walk the throttles back. Either our passenger's got his engines wide open and we're along for the ride, or something else is pulling us in. Neither thought is worth finishing.</p>
+<p>But under the fear, under the adrenaline, the warmth arrives. That honey in my veins. The jagged edges of everything going soft. The ankle taking a well-deserved holiday.</p>
+<p>And my thoughts, finally lining up.</p>
+<p>Fuck. Fent really is a miracle drug.</p>
+<p>&quot;You fly.&quot; I start unbuckling the harness. &quot;I'll deal with him.&quot;</p>
+<p>Ollie tilts the crutch towards me. &quot;Are you sure?&quot;</p>
+<p>&quot;We still need this girl in one piece. And if I need help, I'll shout.&quot; I haul myself up out of the chair and for one beautiful second, forget the crutch entirely—until a prick of pain reminds me that fent doesn't make you invincible.</p>
+<p>I steady myself against the seatback and hook the crutch under my arm. &quot;I'm counting on you, Ollie.&quot;</p>
+<p>He nods and hops onto the seat. His spine straightens and his shoulders square. &quot;I'm counting on you, too.&quot;</p>
+<p>I take one step to the cabin. Then stop. I spin right back around. &quot;Quick question.&quot;</p>
+<p>&quot;Yeah?&quot;</p>
+<p>&quot;Where'd you put the gun?&quot;</p>
+<p>&quot;Under your pillow.&quot;</p>
+<p>&quot;And the bullets?&quot;</p>
+<p>&quot;In your underwear drawer.&quot;</p>
+<hr>
+<p>Calyx groans as her joints crack, flexing as best she can with a thirty-tonne parasite stuck to her side. The molten orange line eating into her cargo hold is the least of her worries.</p>
+<p>But the most of mine.</p>
+<p>Three-quarters of a circle so far. The cutter beam crawls along the starboard hull lining, spitting sparks that die before they reach the deck. A quarter-circle to go, and then my ship stops being mine.</p>
+<p>I'm kneeling in the centre of the hold, tucked behind two crates of machine parts. Good knee down, bearing the load, splinted leg stuck out behind. I know I shouldn't be putting weight on that ankle, but the fent has demoted it from agony to non-existent.</p>
+<p>My breath keeps coming up short, though. Shallow little sips, like the ship's rationing air. Could be adrenaline. More likely the fent settling in my lungs.</p>
+<p>I thumb the mag release and catch it in my palm. Then I dig into my pocket for what I scrounged from my underwear drawer. Loose rounds. They clink against glass as I pull them out.</p>
+<p>Six. Not even a full mag.</p>
+<p>First bullet slides in. Lights are off on my side of the hold; I killed them on the way in. The strips above the starboard wall stay lit, keeping the breach point exposed. He'll have a spotlight. I'll be a silhouette.</p>
+<p>Second bullet. Cover. Two crates, waist-high, steel-sided. Honest cargo. Whatever those parts are worth in Lindenfield, they've just become the most valuable freight I've ever hauled.</p>
+<p>Third. Logan has to come to <em>me</em>. Squeeze through that hole, no idea what's waiting.</p>
+<p>Fourth. And he can't get cute. Can't undock and let the vacuum in through the hole he cut. He heard the broadcast: <em>technology must be unharmed.</em> And he knows what he's here to steal is alive. It breathes.</p>
+<p>Fifth. But me? He just needs me out of the way.</p>
+<p>Sixth bullet. Last one. I shove the mag in and pull down the slide catch. The slide snaps forward into place. I rack it again for good measure, and—</p>
+<p>A round pops out. It pings off the deck, bounces once, and vanishes through the grille.</p>
+<p>&quot;Shit.&quot;</p>
+<p>Been too long since I last used this thing—or the fent's already having its way with me. Fine. Five bullets now. At least the shooting part is hard to forget. Safety off. Point. Squeeze trigger.</p>
+<p>I ease up far enough to peek over the crate.</p>
+<p>The last arc gives out. The circle completes, its rim shimmering white-hot.</p>
+<p>For one held breath, nothing happens at all.</p>
+<p>Then the disc of hull falls inward. It hits the deck with a bang that rings through the floor tiles. Heat ripples off its edges in visible waves.</p>
+<p>Beyond the hole: nothing. Darkness. Their tunnel, unlit. No torch beam. No movement.</p>
+<p>I settle behind the gap between the two crates, cheek against cold steel, and wait.</p>
+<p>And wait.</p>
+<p>I wait so long that the rim of the hole dulls from orange to a browning red. The only assault is the storm outside; another deafening bang sends Calyx spasming. At least I don't feel it anymore.</p>
+<p>Where is he? Why hasn't he said anything? Not even a demand to surrender.</p>
+<p>I have to squint to keep my eyes open. The fent's sedation is building up, and even adrenaline has its limits.</p>
+<p>Something round and blue sails through the hole and bounces into my hold.</p>
+<p>I clench my eyes shut.</p>
+<p>Doesn't make a difference.</p>
+<p>The world turns white. Solid white, poured in through my eyelids, with a squeal that drives straight into the centre of my skull.</p>
+<p>Then something slams into my chest. The deck hits my back. The pistol tears out of my grip and clatters off who knows where.</p>
+<p>By the time my vision starts coming back, there's a knee grinding into my stomach and a man where my air used to be. His forearm bars across my throat. His other hand clamps over his wrist and locks it tight. The halo of white hasn't even faded before the edges of everything start to blur.</p>
+<p>I swing at his face. My nails rake across his eyelids—soft, wet—but he just grips tighter. His face hovers inches over mine, teeth gritted, smeared brown at the gums.</p>
+<p>I scream for Ollie. Nothing comes out.</p>
+<p>It doesn't hurt. The fent sees to that. My lungs are shrieking that something's wrong, my brain is calmly shutting down, and everything is perfectly serene. Everything is fine.</p>
+<p>Can't even tilt my head. I fling my arms wide and sweep the deck, fingers clawing for the pistol. All they find is the grille—cold metal ribs and the gaps between them.</p>
+<p>My hand lands on my own thigh. On my pocket. Something small and firm inside it. On the first clench it slips from my fingers. The second try I pinch it between my pinky and thumb, then swing it at his face with everything left in me.</p>
+<p>The ampule connects with his teeth. He bites down in reflex—</p>
+<p>—and the glass shatters in his mouth.</p>
+<p>He reels off me clutching his face and howling. Blood rolls down his chin, glass dug into his lips, and he's tearing at his tongue with his fingers to rip out the shards.</p>
+<p>I drag in air, crawling backwards on my elbows. &quot;Ollie—&quot; My voice is wheezed air. &quot;Ollie!&quot;</p>
+<p>I grab the crutch by the crates and stumble upright. Logan's doubled over, hurling up globs of glass-filled blood onto my deck. I raise the crutch high above my head, about to swing—</p>
+<p>And freeze. Another man is climbing through the hole in the wall.</p>
+<p>Logan wasn't alone. And in this one's hand, held low and loose—the glint of a knife.</p>
+<p>He rushes me, vaulting over the crates to my side of the hold. I swing the crutch like a bat and clock him clean across the jaw—but he doesn't even slow. He drives shoulder-first into my chest and his momentum bowls me over. His fist thumps into my ribs on the way down, right side. I register it as a punch. The fent registers it as a breeze.</p>
+<p>I'm on my back again, kicking at his shins. He rips the crutch from my grip and swings it up behind his head, the metal crossbar gleaming in the half-light—</p>
+<p>A bang splits the hold.</p>
+<p>He jolts, arms frozen in place. A line of red runs down his white shirt.</p>
+<p>Slowly, he turns to look back over his shoulder.</p>
+<p>Another bang. His shirt ripples, and the crutch falls, clattering against the hull. A second hole high on his shoulder.</p>
+<p>Three more bangs. He convulses with each one, drops to his knees, one hand clamped to his stomach like he's trying to hold himself in. I scramble backwards on my palms until the back of my head knocks against the ramp door.</p>
+<p>*Click. *</p>
+<p>No more bullets. He doesn't need any more.</p>
+<p>With a wet gurgle, the second man folds onto his side. Blood threads down through the grille, dripping into the subdeck below, as slow and steady as fuel leaking from a cracked line.</p>
+<p>At the far end of the hold, framed in the cabin doorway, stands Ollie. A greenish glow spills in behind him—the nebula, leaking through the ship. It turns his fur into grass. He has my pistol locked in both paws, arms extended, level, held exactly the way you're meant to. Of course he knows how; he knows everything except where he learned it.</p>
+<p>Ollie's aim slides past me and trains on the first man. I don't know which of them was Logan. Guess I never will. The strangler is still writhing on the spot, knees trembling, hands slick with his own blood. A rope of crimson spit oozes from his chin.</p>
+<p>&quot;What's wrong with him?&quot; Ollie's voice is steady.</p>
+<p>Mine fights its way out of my ruined throat. &quot;Hey, Ollie… how's fent absorbed into the body?&quot;</p>
+<p>&quot;Oh, usually by the bloodstream—that's why it worked on your neck. Also open wounds. Mucus membranes too—you know, mouth, nose. Butt.&quot; He doesn't take his eyes off the man. His voice is way too enthusiastic to mesh with all the blood in the hold. &quot;But it hits all at once through the membranes. You should never… um, why?&quot;</p>
+<p>The strangler finds me with his eyes. Sees me breathing.</p>
+<p>He starts towards me. Two right steps forward, then one left step back, like the two halves of his brain are fighting for control. The words coming out of his mouth are just slurred sounds. Barely human.</p>
+<p>He manages another step. His knees buckle. A low howl crawls out of him and his arm reaches towards me like I'm his last hope. I shift myself along the ramp door, further away.</p>
+<p>His body falls forward, and his face lands flat onto the metal. A twitch. Then he goes still.</p>
+<p>A laugh. I don't realise it's coming from me at first—raspy, borderline deranged. Holy fuck. &quot;We did it…&quot;</p>
+<p>But Ollie doesn't laugh. The lightshow behind him has stopped—when did it stop? The pistol slips from his paws and thuds on the deck. Both hands rise to his muzzle.</p>
+<p>&quot;You're bleeding.&quot;</p>
+<p>&quot;Nah. Not my blood.&quot; I smack a hand down on my chest to prove it. My fingers meet warm, sticky blood—</p>
+<p>—and something firm and cold. On the right side of my chest.</p>
+<p>A grip. Shaped for a hand. My fingers instinctively wrap around it.</p>
+<p>&quot;What the hell.&quot;</p>
+<p>I stare at the second attacker. Riddled with bullets, folded on his side, dripping enough blood into the subdeck that I start to worry it'll short-circuit the wires down there. He was the one who rushed me with the knife.</p>
+<p>He's not holding a knife.</p>
+<p>Ollie's pacing towards me now, muzzle hidden behind his paws. &quot;You've… you've been…&quot;</p>
+<p>I glance down at that grip sticking out of my chest.</p>
+<p>Oh.</p>
+<p>The handle of his knife. Plus a few inches of red-soaked metal above the skin. The rest of it—who knows how much—buried in my flesh. The grip twitches gently, in time with my heartbeat. I watch it move.</p>
+<p>But… I can't feel it. Just like the ankle. There's a knife in my chest and I can't feel a thing.</p>
+<p>&quot;Ollie—&quot;</p>
+<p>A piercing alarm rings out. Then a flat mechanical voice joins in from the cockpit:</p>
+<p><em>&quot;Gravity well. Apply thrust. Gravity well. Apply thrust.&quot;</em></p>
+<p>I've owned this ship for over a decade and never once heard her speak. &quot;Fuck, what now? Thought you cut the alarm wires.&quot;</p>
+<p>&quot;J-just the broken engine ones, but this one's different.&quot; Ollie looks at the door to the cabin, then back at the knife sticking out of my chest. &quot;More serious.&quot;</p>
+<p><em>&quot;Gravity well. Apply thrust. Gravity well. Apply thrust.&quot;</em></p>
+<p>&quot;Go! I'll be right there.&quot;</p>
+<p>He nods and rushes through the doorway, out of sight.</p>
+<p>Ollie left the controls to save me. And in those unmanned seconds, something's gone wrong. If Calyx has run out of lights to flash and started using words, serious may be an understatement.</p>
+<p>I brace one hand against the cold metal floor, my other hand holding the knife still, and push. My arm almost gives way. I have to stop and suck in a breath through a windpipe that was crushed tighter than a straw a few minutes ago. Hard to tell what's causing the wheezing. The fent setting like cement in my airways, being strangled half to death, or a knife that may well be nestled in my lung? How about all three?</p>
+<p>On the third push, I finally hobble to my feet. The blade keeps my chest tight and my shoulder locked in place, but some buried first-aid memory is screaming at me that no matter what, don't pull it out.</p>
+<p>My crutch lies abandoned behind the second man, the crossbar resting in his blood. The alarm says no. If I bend over to grab it, I might not be able to get up again. I limp around the two men on the floor, one wheeze at a time, dragging my broken ankle behind me.</p>
+<p><em>&quot;Gravity well. Apply thrust. Gravity well. Apply thrust.&quot;</em></p>
+<p>Oh god it's not shutting up. And gravity well?</p>
+<p>&quot;I swear to god, Ollie&quot;—I push myself into the cabin—&quot;if we're about to fly into a black hole…&quot;</p>
+<p>He doesn't respond.</p>
+<p>The doorway to the cockpit is dark. No colours bleeding through. We're finally through the nebula. I stagger against the workbench. Ollie's noodle cup of grass and soil topples over the edge and hits the floor. I shove off the bench and slam my shoulder against the wall and push myself along, one hand cradling the knife handle like it might slip out or sink deeper.</p>
+<p>&quot;Ollie… answer me!&quot;</p>
+<p>I stumble through the cockpit doorway and catch myself on the frame. Ollie's in the pilot's seat. The throttles are rammed to their stops, reverse thrusters wide open, joystick hauled back. Through the deck plates, Calyx's one working engine is screaming. She's giving us everything she has—</p>
+<p><em>&quot;Gravity well. Apply thrust.&quot;</em></p>
+<p>—and her everything isn't enough.</p>
+<p>I look out the viewport, and I stop hearing the alarm. I stop hearing anything.</p>
+<p>It's not a black hole.</p>
+<p>What the hell is it?</p>
+<p>The first thing my brain does is lie to me. <em>Planet</em>, it says, because there's a blotch of colour where everything should be black: a horizon, violet dimming down into dark. A planet that was hidden behind the nebula. But planets don't drift and shimmer. And planets don't have a pulse; this violet brightens and fades. Brightens, and fades.</p>
+<p>&quot;I can't break out!&quot; Ollie's claws are locked around the joystick. &quot;Not on one engine—or with thirty tonnes stuck to our starboard.&quot; His voice cracks. &quot;It's pulling us in and I can't—I've tried everything.&quot;</p>
+<p>This is beyond anything the company drilled into him. Beyond anything you can train for.</p>
+<p><em>Long</em> is a useless word for what's in front of us. Whale is the closest shape I know. But take a whale and stretch it, wind it, mash it with something from myth, maybe. A wyrm wearing a whale's skin.</p>
+<p>Trailing far behind it, tens of thousands of kilometres in length, twin tails sway in slow, waving arcs. Every pass sheds a trail of glittering dust that hangs in the black behind it, marking its path. Nothing this big should be allowed to move that softly. Those tails could swat a station out of orbit like a fly, and the beast wouldn't even know it.</p>
+<p>Ollie twists around in the seat. The black of his eyes is the widest I've ever seen. &quot;What *is *it?&quot;</p>
+<p>The word surfaces from some half-listened advisory. Scheduled to cross the Lindenfield corridor. I remember hearing it. I remember dismissing it.</p>
+<p>&quot;Cosmofauna.&quot;</p>
+<p>I thought we'd be gone long before it mattered. But we're not in the corridor, are we? We've flown out to meet it early.</p>
+<p>&quot;Get on!&quot; Ollie springs out of the seat.</p>
+<p>I count the eyes. Eight pairs, set down the length of what I'm choosing to call its neck, each one burning a deep, steady orange. You could mistake them for small suns strung on a wire. I can't tell whether they're fixed on us or on nothing.</p>
+<p>&quot;Are you listening? We need to strap in. <em>Now</em>.&quot;</p>
+<p>I stare down at him. I know what those words mean. They just don't connect to what's happening.</p>
+<p>Until Calyx reminds me with a painful echo:</p>
+<p><em>&quot;Gravity well. Apply thrust.&quot;</em></p>
+<p>It's large enough to command its own gravity. And we're on a one-way collision course.</p>
+<p>&quot;Hurry up!&quot;</p>
+<p>I lurch forward, catch the backrest and throw myself into the seat. Ollie hops onto my lap, his head coming to rest beside the knife handle. He passes me the harness straps one at a time, and I click them over the both of us and haul the slack tight.</p>
+<p>The knife sits between us like a third crew member.</p>
+<p>It doesn't take long before the creature stops fitting in the viewport. Just its head and the ridge of its upper back, and even those crowd the glass. I look for a mouth. For limbs. It has none, none that register as those things to me. Either I can't read it, or it outgrew needing body parts long ago. We're a speck of debris falling onto something that's seen more of the universe than humans ever will—and it'll glide on, seeing more, long after Ollie and I are a stain on its hide.</p>
+<p>Then it hits me. It hits me in the way only fent-subdued despair can.</p>
+<p>&quot;We're going to die here.&quot;</p>
+<p>Ollie shakes his head. His muzzle brushes the flat of the blade, and it shifts inside me.</p>
+<p>&quot;I can land this.&quot;</p>
+<p>He's scared. He's shaking against me. We're both shaking—the seat trembles with us.</p>
+<p>But he said it with more confidence than I've ever heard out of him. And by now, I know I can believe every word he says.</p>
+<p>&quot;Just, promise me… no spins this time.&quot;</p>
+<p>&quot;I'll try.&quot;</p>
+<p>The creature's back rises and falls in slow swells. All across it, the hide has erupted into geological landscape. Crystal and bone punch through the skin in shards—some the size of mountains, jagged as broken teeth—others the size of trees, a forest of bone trees that never got the message that the idiom wasn't literal.</p>
+<p>Even the crystals share the pulse, brightening and fading in tempo with the hide. They're a part of its body. They share the same breaths.</p>
+<p>Over the whole impossible length of it hangs a thin violet haze. Clouds bank against the crystal spines. There's weather down there. Weather, on the back of an animal in the middle of space.</p>
+<p>Calyx starts to rattle. Flame cloaks the viewport. We've breached the atmosphere, and every gauge on the console is red.</p>
+<p>Just before the rest of its neck slides beyond the viewport, one sun—the lowest eye—tilts towards us. Light and heat lash my face.</p>
+<p>Sixteen eyes, and it spends just one of them on us.</p>
+<p>We pass beneath the largest of the bone spires, and something makes a low, vast groan. It rumbles through the hull, through the seat. I can feel it through the steel in my chest.</p>
+<p>I've been flying long enough to stop counting the years. This is the first time the sky has ever made noise.</p>
+<p>Ollie swerves left under a crystal in mid-breath. A hard thud, starboard side, and the whole ship lurches. For a second I'm sure we've lost the hull entirely, but I'm still breathing. The heat of re-entry hasn't cooked us alive. I wrap my arms around Ollie, and the warmth of his fur soaks into my core, around the blade in my chest.</p>
+<p>It's the only thing I can do. Hold on.</p>
+<p>Thousands of crystals and bone spurs streak past. Ollie works the joystick in small movements, threading Calyx between them as the altitude drops. This is what Ollie was made for, a company-owned work slave, gliding down the spine of the oldest thing in the sky.</p>
+<p>The violet ground—the <em>hide</em>—rushes up to greet us.</p>
+<p>&quot;BRACE!&quot;</p>
+<p>I clench my eyes shut and squeeze him hard, hard enough that something cracks. And for one incredible second, the rattling stops. Everything stops.</p>
+<p>Then noise. Crunching metal, squealing friction. Calyx's belly shrieking against crystal. Ollie's weight slams back into my chest—then he and his warmth are gone. Taken from my arms.</p>
+<p>A groan from all around me. The flicker of violet beneath my eyelids.</p>
+<p>The last thing is the heat ebbing from my skin.</p>
+<p>The cold seeps in to take its place.</p>
+
+
+            <script async type="text/javascript">
+/* From extension marp-team.marp-vscode */
+(()=>{var I=Object.defineProperty;var K=(f,u,_)=>u in f?I(f,u,{enumerable:!0,configurable:!0,writable:!0,value:_}):f[u]=_;var r=(f,u)=>I(f,"name",{value:u,configurable:!0});var w=(f,u,_)=>K(f,typeof u!="symbol"?u+"":u,_);(()=>{var f={32(S,E,h){S.exports=h(924)},924(S,E){"use strict";var h;h={value:!0};const b={h1:{proto:r(()=>HTMLHeadingElement,"proto"),attrs:{role:"heading","aria-level":"1"},style:"display: block; font-size: 2em; margin-block-start: 0.67em; margin-block-end: 0.67em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h2:{proto:r(()=>HTMLHeadingElement,"proto"),attrs:{role:"heading","aria-level":"2"},style:"display: block; font-size: 1.5em; margin-block-start: 0.83em; margin-block-end: 0.83em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h3:{proto:r(()=>HTMLHeadingElement,"proto"),attrs:{role:"heading","aria-level":"3"},style:"display: block; font-size: 1.17em; margin-block-start: 1em; margin-block-end: 1em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h4:{proto:r(()=>HTMLHeadingElement,"proto"),attrs:{role:"heading","aria-level":"4"},style:"display: block; margin-block-start: 1.33em; margin-block-end: 1.33em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h5:{proto:r(()=>HTMLHeadingElement,"proto"),attrs:{role:"heading","aria-level":"5"},style:"display: block; font-size: 0.83em; margin-block-start: 1.67em; margin-block-end: 1.67em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h6:{proto:r(()=>HTMLHeadingElement,"proto"),attrs:{role:"heading","aria-level":"6"},style:"display: block; font-size: 0.67em; margin-block-start: 2.33em; margin-block-end: 2.33em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},span:{proto:r(()=>HTMLSpanElement,"proto")},pre:{proto:r(()=>HTMLElement,"proto"),style:"display: block; font-family: monospace; white-space: pre; margin: 1em 0; --marp-auto-scaling-white-space: pre;"}},q="data-marp-auto-scaling-wrapper",C="data-marp-auto-scaling-svg",O="data-marp-auto-scaling-container",j=class j extends HTMLElement{constructor(){super();w(this,"container");w(this,"containerSize");w(this,"containerObserver");w(this,"svg");w(this,"svgComputedStyle");w(this,"svgPreserveAspectRatio","xMinYMid meet");w(this,"wrapper");w(this,"wrapperSize");w(this,"wrapperObserver");const n=r(s=>([t])=>{const{width:i,height:o}=t.contentRect;this[s]={width:i,height:o},this.updateSVGRect()},"e");this.attachShadow({mode:"open"}),this.containerObserver=new ResizeObserver(n("containerSize")),this.wrapperObserver=new ResizeObserver((...s)=>{n("wrapperSize")(...s),this.flushSvgDisplay()})}static get observedAttributes(){return["data-downscale-only"]}connectedCallback(){this.shadowRoot.innerHTML=`
+<style>
+  svg[${C}] { display: block; width: 100%; height: auto; vertical-align: top; }
+  span[${O}] { display: table; white-space: var(--marp-auto-scaling-white-space, nowrap); width: max-content; }
+</style>
+<div ${q}>
+  <svg part="svg" ${C}>
+    <foreignObject><span ${O}><slot></slot></span></foreignObject>
+  </svg>
+</div>
+    `.split(/\n\s*/).join(""),this.wrapper=this.shadowRoot.querySelector(`div[${q}]`)??void 0;const n=this.svg;this.svg=this.wrapper?.querySelector(`svg[${C}]`)??void 0,this.svg!==n&&(this.svgComputedStyle=this.svg?window.getComputedStyle(this.svg):void 0),this.container=this.svg?.querySelector(`span[${O}]`)??void 0,this.observe()}disconnectedCallback(){this.svg=void 0,this.svgComputedStyle=void 0,this.wrapper=void 0,this.container=void 0,this.observe()}attributeChangedCallback(){this.observe()}flushSvgDisplay(){const{svg:n}=this;n&&(n.style.display="inline",requestAnimationFrame(()=>{n.style.display=""}))}observe(){this.containerObserver.disconnect(),this.wrapperObserver.disconnect(),this.wrapper&&this.wrapperObserver.observe(this.wrapper),this.container&&this.containerObserver.observe(this.container),this.svgComputedStyle&&this.observeSVGStyle(this.svgComputedStyle)}observeSVGStyle(n){const s=r(()=>{const t=(()=>{const i=n.getPropertyValue("--preserve-aspect-ratio");return i?i.trim():`x${(({textAlign:o,direction:d})=>{if(o.endsWith("left"))return"Min";if(o.endsWith("right"))return"Max";if(o==="start"||o==="end"){let m=d==="rtl";return o==="end"&&(m=!m),m?"Max":"Min"}return"Mid"})(n)}YMid meet`})();t!==this.svgPreserveAspectRatio&&(this.svgPreserveAspectRatio=t,this.updateSVGRect()),n===this.svgComputedStyle&&requestAnimationFrame(s)},"t");s()}updateSVGRect(){let n=Math.ceil(this.containerSize?.width??0);const s=Math.ceil(this.containerSize?.height??0);this.dataset.downscaleOnly!==void 0&&(n=Math.max(n,this.wrapperSize?.width??0));const t=this.svg?.querySelector(":scope > foreignObject");if(t?.setAttribute("width",`${n}`),t?.setAttribute("height",`${s}`),this.svg&&(this.svg.setAttribute("viewBox",`0 0 ${n} ${s}`),this.svg.setAttribute("preserveAspectRatio",this.svgPreserveAspectRatio),this.svg.style.height=n<=0||s<=0?"0":""),this.container){const i=this.svgPreserveAspectRatio.toLowerCase();this.container.style.marginLeft=i.startsWith("xmid")||i.startsWith("xmax")?"auto":"0",this.container.style.marginRight=i.startsWith("xmi")?"auto":"0"}}};r(j,"s");let k=j;const T=r((c,{attrs:v={},style:n})=>class extends c{constructor(...s){super(...s);for(const[t,i]of Object.entries(v))this.hasAttribute(t)||this.setAttribute(t,i);this._shadow()}static get observedAttributes(){return["data-auto-scaling"]}connectedCallback(){this._update()}attributeChangedCallback(){this._update()}_shadow(){if(!this.shadowRoot)try{this.attachShadow({mode:"open"})}catch(s){if(!(s instanceof Error&&s.name==="NotSupportedError"))throw s}return this.shadowRoot}_update(){const s=this._shadow();if(s){const t=n?`<style>:host { ${n} }</style>`:"";let i="<slot></slot>";const{autoScaling:o}=this.dataset;o!==void 0&&(i=`<marp-auto-scaling exportparts="svg:auto-scaling" ${o==="downscale-only"?"data-downscale-only":""}>${i}</marp-auto-scaling>`),s.innerHTML=t+i}}},"r");let L;const z=r(()=>L??(L=!!document.createElement("div",{is:"marp-auto-scaling"}).outerHTML.startsWith("<div is"),L),"a"),F=Symbol();let A;const a="marpitSVGPolyfill:setZoomFactor,",l=Symbol(),e=Symbol(),p=r(()=>{const c=navigator.vendor==="Apple Computer, Inc.",v=c?[H]:[],n={then:r(s=>(c?(async()=>{if(A===void 0){const t=document.createElement("canvas");t.width=10,t.height=10;const i=t.getContext("2d"),o=new Image(10,10),d=new Promise(m=>{o.addEventListener("load",()=>m())});o.crossOrigin="anonymous",o.src="data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%2210%22%20viewBox%3D%220%200%201%201%22%3E%3CforeignObject%20width%3D%221%22%20height%3D%221%22%20requiredExtensions%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxhtml%22%3E%3Cdiv%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxhtml%22%20style%3D%22width%3A%201px%3B%20height%3A%201px%3B%20background%3A%20red%3B%20position%3A%20relative%22%3E%3C%2Fdiv%3E%3C%2FforeignObject%3E%3C%2Fsvg%3E",await d,i.drawImage(o,0,0),A=i.getImageData(5,5,1,1).data[3]<128}return A})().then(t=>{s?.(t?[H]:[])}):s?.([]),n),"then")};return Object.assign(v,n)},"p");let y,g;function H(c){const v=typeof c=="object"&&c.target||document,n=typeof c=="object"?c.zoom:c;window[e]||(Object.defineProperty(window,e,{configurable:!0,value:!0}),document.body.style.zoom=1.0001,document.body.offsetHeight,document.body.style.zoom=1,window.addEventListener("message",({data:t,origin:i})=>{if(i===window.origin)try{if(t&&typeof t=="string"&&t.startsWith(a)){const[,o]=t.split(","),d=Number.parseFloat(o);Number.isNaN(d)||(g=d)}}catch(o){console.error(o)}}));let s=!1;Array.from(v.querySelectorAll("svg[data-marpit-svg]"),t=>{var i,o,d,m;t.style.transform||(t.style.transform="translateZ(0)");const x=n||g||t.currentScale||1;y!==x&&(y=x,s=x);const W=t.getBoundingClientRect(),{length:Z}=t.children;for(let N=0;N<Z;N+=1){const $=t.children[N];if($.getScreenCTM){const M=$.getScreenCTM();if(M){const U=(o=(i=$.x)===null||i===void 0?void 0:i.baseVal.value)!==null&&o!==void 0?o:0,X=(m=(d=$.y)===null||d===void 0?void 0:d.baseVal.value)!==null&&m!==void 0?m:0,J=$.children.length;for(let P=0;P<J;P+=1){const G=$.children[P];if(G.tagName==="SECTION"){const{style:D}=G;D.transformOrigin||(D.transformOrigin=`${-U}px ${-X}px`),D.transform=`scale(${x}) matrix(${M.a}, ${M.b}, ${M.c}, ${M.d}, ${M.e-W.left}, ${M.f-W.top}) translateZ(0.0001px)`;break}}}}}}),s!==!1&&Array.from(v.querySelectorAll("iframe"),({contentWindow:t})=>{t?.postMessage(`${a}${s}`,window.origin==="null"?"*":window.origin)})}r(H,"v");function B({once:c=!1,target:v=document}={}){const n=(function(s=document){if(s[l])return s[l];let t=!0;const i=r(()=>{t=!1,delete s[l]},"i");Object.defineProperty(s,l,{configurable:!0,value:i});let o=[],d=!1;(async()=>{try{o=await p()}finally{d=!0}})();const m=r(()=>{for(const x of o)x({target:s});d&&o.length===0||t&&window.requestAnimationFrame(m)},"r");return m(),i})(v);return c?(n(),()=>{}):n}r(B,"w"),y=1,g=void 0;const Y=B,R=Symbol(),V=r((c=document)=>{if(typeof window>"u")throw new Error("Marp Core's browser script is valid only in browser context.");if(((t=document)=>{const i=window[F];i||customElements.define("marp-auto-scaling",k);for(const o of Object.keys(b)){const d=`marp-${o}`,m=b[o].proto();z()&&m!==HTMLElement?i||customElements.define(d,T(m,{style:b[o].style}),{extends:o}):(i||customElements.define(d,T(HTMLElement,b[o])),t.querySelectorAll(`${o}[is="${d}"]`).forEach(x=>{x.outerHTML=x.outerHTML.replace(new RegExp(`^<${o}`,"i"),`<${d}`).replace(new RegExp(`</${o}>$`,"i"),`</${d}>`)}))}window[F]=!0})(c),c[R])return c[R];const v=B({target:c}),n=r(()=>{v(),delete c[R]},"n"),s=Object.assign(n,{cleanup:n,update:r(()=>V(c),"update")});return Object.defineProperty(c,R,{configurable:!0,value:s}),s},"f");E.browser=V,h=V,h=Y}};const u={};function _(S){const E=u[S];if(E!==void 0)return E.exports;const h=u[S]={exports:{}};return f[S](h,h.exports,_),h.exports}r(_,"__webpack_require__");let Q={};(()=>{"use strict";var S=_(32);const E="marp_vscode_content_section",h="data-marp-vscode-content-start-line",b="data-marp-vscode-content-end-line";function q(a){a.core.ruler.push(E,l=>{if(l.inlineMode)return;let e=null,p=0,y=0;for(const g of l.tokens)g.map&&(p=g.map[0],y=Math.max(y,...g.map)),g.type==="marpit_slide_open"&&(e&&(e.map&&e.attrSet(h,e.map[0]),e.attrSet(b,p-1)),e=g);e&&(e.map&&e.attrSet(h,e.map[0]),e.attrSet(b,y))})}r(q,"marpVSCodeContentSection");const C="marp-vscode.overflowTracker",O=r(a=>typeof a=="object"&&a!=null&&"type"in a&&a.type===C&&"overflowElements"in a&&Array.isArray(a.overflowElements),"isOverflowTrackerEvent"),A=class A{constructor(l){this.postMessage=l,this.delay=150,this.update()}update(){window.setTimeout(()=>this.detectOverflowElements(),this.delay)}cleanup(){}detectOverflowElements(){const l=[];for(const e of document.querySelectorAll(`section[${h}][${b}]`)){const p=e.scrollWidth-e.clientWidth,y=e.scrollHeight-e.clientHeight;if(p<=0&&y<=0)continue;const g=parseInt(e.getAttribute(h)||"",10),H=parseInt(e.getAttribute(b)||"",10);Number.isNaN(g)||Number.isNaN(H)||l.push({startLine:g,endLine:H})}this.postMessage(C,{overflowElements:l})}};r(A,"OverflowTracker");let k=A;function T(){let a;const l=window.cspAlerter?._messaging?.postMessage||window.styleLoadingMonitor?._poster?.postMessage,e=r(()=>{const p=document.getElementById("__marp-vscode");!!a!=!!p?(document.body.classList.toggle("marp-vscode",!!p),p?a={browser:(0,S.browser)(),overflowTracker:l?new k(l):void 0}:(a?.browser.cleanup(),a?.overflowTracker?.cleanup(),a=void 0)):(a?.browser.update(),a?.overflowTracker?.update()),a?(p&&L(p),z()):F()},"updateCallback");window.addEventListener("load",()=>window.setTimeout(e,100)),window.addEventListener("vscode.markdown.updateContent",e),e()}r(T,"preview");const L=r(a=>{a.querySelectorAll("[is]").forEach(l=>{if(l.nodeName.includes("-")||document.createElement(l.nodeName).constructor!==l.constructor)return;const{outerHTML:p}=l;l.outerHTML=p,console.debug("[marp-vscode] Custom element has been upgraded forcibly:",p.slice(0,p.indexOf(">")+1||void 0))})},"forceUpgradeCustomElements"),z=r(()=>{const a=document.querySelectorAll("style:not(#__marp-vscode-style,#_defaultStyles,[data-marp-vscode-body])"),l=document.querySelectorAll('link[rel="stylesheet"][href]:not([href*="marp-vscode"])');a.forEach(e=>{e.closest("#__marp-vscode")||(e.dataset.marpVscodeBody=e.textContent??"",e.textContent="")}),l.forEach(e=>{if(e.closest("#__marp-vscode"))return;const{href:p}=e;e.dataset.marpVscodeHref=p,e.removeAttribute("href")})},"removeStyles"),F=r(()=>{const a=document.querySelectorAll("style[data-marp-vscode-body]"),l=document.querySelectorAll("link[data-marp-vscode-href]");a.forEach(e=>{e.textContent=e.dataset.marpVscodeBody||"",delete e.dataset.marpVscodeBody}),l.forEach(e=>{e.href=e.dataset.marpVscodeHref||"",delete e.dataset.marpVscodeHref})},"restoreStyles");T()})()})();})();
+
+</script>
+
+        </body>
+        </html>

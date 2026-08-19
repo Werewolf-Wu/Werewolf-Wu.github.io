@@ -306,6 +306,15 @@ body.reader-page > #markdown-mermaid {
 }
 
 .reader-main > p > em:only-child {
+  display: inline;
+}
+
+.reader-main > p.reader-special-italic {
+  color: var(--quote);
+  text-align: center;
+}
+
+.reader-main > p.reader-special-italic > em:only-child {
   display: block;
   text-align: center;
 }
